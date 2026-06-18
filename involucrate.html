@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>EJL | Involúcrate · Sé parte de la familia</title>
+    <!-- Tailwind CSS + Fuente Inter -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        .nav-link-transparent {
+            position: relative;
+            color: white;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+        .nav-link-transparent::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        .nav-link-transparent:hover::after,
+        .nav-link-transparent.active::after {
+            width: 100%;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+        }
+        /* Estilos extra para móvil - más épico */
+        @media (max-width: 640px) {
+            .hero-mobile-text {
+                text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+            }
+            .card-mobile {
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+            }
+            .form-input-mobile {
+                font-size: 16px !important; /* Evita zoom en iOS */
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900">
+
+    <!-- ========== NAVBAR ========== -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-3 sm:py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 sm:w-16 sm:h-16">
+                        <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain">
+                    </div>
+                    <div>
+                        <a href="index.html" class="text-base sm:text-xl md:text-2xl font-bold tracking-tight text-white">
+                            EJL<span class="text-indigo-300">.</span>
+                        </a>
+                        <p class="text-[8px] sm:text-[10px] md:text-xs text-white/80 -mt-1 hidden sm:block">Ejército Juvenil Libano</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link-transparent">Inicio</a>
+                    <a href="nosotros.html" class="nav-link-transparent">Nosotros</a>
+                    <a href="ubicacion.html" class="nav-link-transparent">Ubicación</a>
+                    <a href="eventos.html" class="nav-link-transparent">Eventos</a>
+                    <a href="galeria.html" class="nav-link-transparent">Galería</a>
+                    <a href="involucrate.html" class="nav-link-transparent active">Involúcrate</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menuBtn" class="text-white focus:outline-none">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobileMenu" class="md:hidden hidden mt-4 p-4 rounded-2xl bg-black/50 backdrop-blur-md">
+                <a href="index.html" class="block py-2 px-3 rounded-md text-white bg-white/20">Inicio</a>
+                <a href="nosotros.html" class="block py-2 px-3 rounded-md text-white/80 hover:bg-white/10">Nosotros</a>
+                <a href="ubicacion.html" class="block py-2 px-3 rounded-md text-white/80 hover:bg-white/10">Ubicación</a>
+                <a href="eventos.html" class="block py-2 px-3 rounded-md text-white/80 hover:bg-white/10">Eventos</a>
+                <a href="galeria.html" class="block py-2 px-3 rounded-md text-white/80 hover:bg-white/10">Galería</a>
+                <a href="involucrate.html" class="block py-2 px-3 rounded-md text-white/80 hover:bg-white/10">Involúcrate</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="relative min-h-screen flex items-center bg-cover bg-center bg-no-repeat" style="background-image: url('./IMAGES/foto12.jpg'); background-size: cover; background-position: center 30%;">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/30 to-transparent"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 text-center">
+            <span class="text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-indigo-300">Sé parte</span>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-4 tracking-tight hero-mobile-text">
+                Involúcrate con EJL
+            </h1>
+            <div class="w-20 sm:w-24 h-0.5 bg-gradient-to-r from-indigo-400 to-purple-400 mx-auto mt-5 sm:mt-6 rounded-full"></div>
+            <p class="text-gray-200 mt-5 sm:mt-6 max-w-2xl mx-auto text-sm sm:text-base lg:text-lg px-4">
+                Tu lugar está aquí. Descubre cómo puedes servir, crecer y ser parte de esta gran familia.
+            </p>
+        </div>
+    </section>
+
+    <!-- ========== SECCIÓN VIDEO DE LA LÍDER ========== -->
+    <section class="relative py-16 sm:py-20 md:py-24 bg-gray-900 overflow-hidden">
+        <!-- Efecto de luz ambiental -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-0 right-0 w-80 h-80 sm:w-96 sm:h-96 bg-indigo-600/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 w-80 h-80 sm:w-96 sm:h-96 bg-purple-600/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-8 sm:gap-10 md:gap-12 lg:gap-16">
+                
+                <!-- ===== COLUMNA IZQUIERDA: TEXTO ===== -->
+                <div class="w-full lg:w-1/2 text-center lg:text-left">
+                    <!-- Badge -->
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/20 border border-indigo-500/20 text-indigo-300 text-xs font-medium tracking-wider uppercase mb-4">
+                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                        Queremos decirte algo
+                    </div>
+
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-3 leading-tight tracking-tight">
+                        Una palabra para <br class="hidden sm:block">
+                        <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">ti</span>
+                    </h2>
+
+                    <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 mt-4 rounded-full"></div>
+
+                    <p class="text-gray-300 text-base sm:text-lg mt-4 leading-relaxed max-w-lg lg:max-w-none">
+                        Nuestra líder tiene un mensaje especial para ti. 
+                        <span class="text-indigo-300 font-medium">Unas palabras que nacen del corazón</span> y que queremos compartir contigo.
+                    </p>
+
+                    <p class="text-gray-400 text-sm sm:text-base mt-3 leading-relaxed max-w-lg lg:max-w-none">
+                        No importa si es tu primera vez con nosotros o si ya eres parte de esta familia, 
+                        <span class="text-white/80">este mensaje es para ti.</span>
+                    </p>
+
+                    <!-- Frase destacada -->
+                    <div class="mt-6 p-4 sm:p-5 bg-white/5 rounded-2xl border border-white/10 max-w-lg lg:max-w-none">
+                        <p class="text-indigo-300 text-sm sm:text-base italic leading-relaxed">
+                            "Involúcrate. Sirve. Crece. EJL te espera."
+                        </p>
+                        <p class="text-gray-500 text-xs mt-2">— Abi Espinosa</p>
+                    </div>
+                </div>
+
+                <!-- ===== COLUMNA DERECHA: VIDEO VERTICAL ===== -->
+                <div class="w-full lg:w-1/2 flex justify-center lg:justify-end">
+                    <div class="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-sm xl:max-w-md">
+                        <!-- Glow detrás del video -->
+                        <div class="absolute -inset-4 bg-gradient-to-r from-indigo-600/20 to-purple-600/20 rounded-3xl blur-2xl"></div>
+                        
+                        <!-- Contenedor del video vertical (9:16) -->
+                        <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/30 backdrop-blur-sm">
+                            <div class="relative w-full" style="aspect-ratio: 9/16;">
+                                <video 
+                                    class="absolute inset-0 w-full h-full object-contain cursor-pointer bg-black"
+                                    controls
+                                    playsinline
+                                    poster="./IMAGES/video3-poster.jpg"
+                                >
+                                    <source src="./IMAGES/ejl_video3.mov" type="video/mp4">
+                                    Tu navegador no soporta videos.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ========== AREAS DE SERVICIO (solo 4: Logística, Intercesión, Discipulado, Comunicación) ========== -->
+    <section class="relative py-12 sm:py-16 md:py-20 lg:py-24">
+        <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+            <div class="text-center mb-10 sm:mb-12">
+                <span class="text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-indigo-400">Sirve con propósito</span>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mt-2">Áreas de servicio</h2>
+                <div class="w-16 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mt-3 sm:mt-4 rounded-full"></div>
+                <p class="text-gray-400 mt-3 sm:mt-4 max-w-2xl mx-auto text-sm sm:text-base px-4">
+                    Encuentra el área donde Dios te ha llamado a servir y desarrolla tus dones
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
+                <!-- Logística -->
+                <div class="bg-black/40 backdrop-blur-sm rounded-2xl border border-white/10 p-5 sm:p-6 transition-all duration-300 hover:border-indigo-500/50 hover:scale-105 card-mobile">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-3 sm:mb-4">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-white">Logística</h3>
+                    <p class="text-gray-400 mt-2 leading-relaxed text-sm sm:text-base">
+                        Organización, montaje y apoyo en eventos. Tu ayuda es clave para que todo fluya.
+                    </p>
+                </div>
+
+                <!-- Intercesión -->
+                <div class="bg-black/40 backdrop-blur-sm rounded-2xl border border-white/10 p-5 sm:p-6 transition-all duration-300 hover:border-indigo-500/50 hover:scale-105 card-mobile">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-3 sm:mb-4">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-white">Intercesión</h3>
+                    <p class="text-gray-400 mt-2 leading-relaxed text-sm sm:text-base">
+                        El corazón de oración del grupo. Intercede por la iglesia, la ciudad y las naciones.
+                    </p>
+                </div>
+
+                <!-- Discipulado -->
+                <div class="bg-black/40 backdrop-blur-sm rounded-2xl border border-white/10 p-5 sm:p-6 transition-all duration-300 hover:border-indigo-500/50 hover:scale-105 card-mobile">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-3 sm:mb-4">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-white">Discipulado</h3>
+                    <p class="text-gray-400 mt-2 leading-relaxed text-sm sm:text-base">
+                        Acompaña a nuevos creyentes en su crecimiento espiritual y formación.
+                    </p>
+                </div>
+
+                <!-- Comunicación -->
+                <div class="bg-black/40 backdrop-blur-sm rounded-2xl border border-white/10 p-5 sm:p-6 transition-all duration-300 hover:border-indigo-500/50 hover:scale-105 card-mobile">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-3 sm:mb-4">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-white">Comunicación</h3>
+                    <p class="text-gray-400 mt-2 leading-relaxed text-sm sm:text-base">
+                        Fotografía, diseño, redes sociales. Cuenta lo que Dios hace en EJL.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FORMULARIO DE REGISTRO ========== -->
+    <section class="relative py-12 sm:py-16 md:py-20 lg:py-24 bg-cover bg-center bg-no-repeat" style="background-image: url('./IMAGES/foto12.jpg'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+        
+        <div class="relative z-10 max-w-3xl mx-auto px-5 sm:px-6 lg:px-8">
+            <div class="bg-black/40 backdrop-blur-md rounded-2xl border border-white/20 p-5 sm:p-6 md:p-8">
+                <div class="text-center mb-5 sm:mb-6">
+                    <span class="text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-indigo-300">Da el paso</span>
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1">Formulario de interés</h2>
+                    <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-400 to-purple-400 mx-auto mt-2 rounded-full"></div>
+                    <p class="text-gray-300 text-xs sm:text-sm mt-3">
+                        Completa tus datos y nos pondremos en contacto contigo
+                    </p>
+                </div>
+
+                <form class="space-y-3 sm:space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <div>
+                            <input type="text" placeholder="Nombre completo" class="form-input-mobile w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:border-indigo-500 focus:outline-none transition text-sm sm:text-base">
+                        </div>
+                        <div>
+                            <input type="email" placeholder="Correo electrónico" class="form-input-mobile w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:border-indigo-500 focus:outline-none transition text-sm sm:text-base">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <div>
+                            <input type="tel" placeholder="Teléfono / WhatsApp" class="form-input-mobile w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:border-indigo-500 focus:outline-none transition text-sm sm:text-base">
+                        </div>
+                        <div>
+                            <input type="number" placeholder="Edad" class="form-input-mobile w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:border-indigo-500 focus:outline-none transition text-sm sm:text-base">
+                        </div>
+                    </div>
+
+                    <div>
+                        <select class="form-input-mobile w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:border-indigo-500 focus:outline-none transition text-sm sm:text-base">
+                            <option value="" class="bg-gray-800">Selecciona un área de interés</option>
+                            <option value="logistica" class="bg-gray-800">Logística</option>
+                            <option value="intercesion" class="bg-gray-800">Intercesión</option>
+                            <option value="discipulado" class="bg-gray-800">Discipulado</option>
+                            <option value="comunicacion" class="bg-gray-800">Comunicación y Redes</option>
+                            <option value="otro" class="bg-gray-800">Otro / No sé aún</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <textarea rows="2" placeholder="Cuéntanos sobre ti..." class="form-input-mobile w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:border-indigo-500 focus:outline-none transition text-sm sm:text-base"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-all duration-300 transform hover:scale-[1.01] shadow-lg text-sm sm:text-base">
+                        Enviar solicitud
+                    </button>
+                </form>
+
+                <p class="text-center text-gray-400 text-xs mt-4">
+                    Al enviar este formulario, recibirás respuesta de nuestro equipo
+                </p>
+            </div>
+        </div>
+    </section>
+
+        
+     <!-- ========== FOOTER ========== -->
+    <footer class="bg-gray-900 border-t border-gray-800 pt-10 sm:pt-12 md:pt-16 pb-6 sm:pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+                <!-- Columna 1 - Logo y descripción -->
+                <div class="text-center sm:text-left">
+                    <div class="flex items-center justify-center sm:justify-start space-x-2">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden flex-shrink-0">
+                            <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain">
+                        </div>
+                        <span class="text-xl font-bold text-white">EJL<span class="text-indigo-400">.</span></span>
+                    </div>
+                    <p class="mt-3 text-sm text-gray-400">Ejército Juvenil Libano<br>Amigos por siempre</p>
+                </div>
+
+                <!-- Columna 2 - Enlaces -->
+                <div class="text-center sm:text-left">
+                    <h4 class="text-white font-semibold mb-3">Enlaces</h4>
+                    <ul class="space-y-1.5 text-sm">
+                        <li><a href="index.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Inicio</a></li>
+                        <li><a href="nosotros.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Nosotros</a></li>
+                        <li><a href="ubicacion.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Ubicación</a></li>
+                        <li><a href="eventos.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Eventos</a></li>
+                        <li><a href="galeria.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Galería</a></li>
+                        <li><a href="involucrate.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Involúcrate</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 3 - Contacto -->
+                <div class="text-center sm:text-left">
+                    <h4 class="text-white font-semibold mb-3">Contacto</h4>
+                    <ul class="space-y-1.5 text-sm text-gray-400">
+                        <li>
+                            <a href="mailto:ejl.casadeoracion@gmail.com" class="hover:text-indigo-400 transition duration-300">
+                                ejl.casadeoracion@gmail.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+527712077884" class="hover:text-indigo-400 transition duration-300">
+                                771 207 7884
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="mt-3 flex gap-3 justify-center sm:justify-start">
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/ejl.oficialcdo" target="_blank" class="text-gray-400 hover:text-pink-500 transition duration-300" aria-label="Instagram">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                            </svg>
+                        </a>
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/ejl.axs" target="_blank" class="text-gray-400 hover:text-blue-500 transition duration-300" aria-label="Facebook">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna 4 - Dirección -->
+                <div class="text-center sm:text-left">
+                    <h4 class="text-white font-semibold mb-3">Dirección</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Calle Ángela Peralta No. 206<br>
+                        Colonia Del Castillo<br>
+                        Pachuca, Hidalgo
+                    </p>
+                </div>
+            </div>
+
+            <!-- Línea divisoria y créditos -->
+            <div class="border-t border-gray-800 mt-8 sm:mt-10 pt-6 sm:pt-8">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
+                    <p class="text-xs sm:text-sm text-gray-500">
+                        © 2025 Ejército Juvenil Libano. Todos los derechos reservados.
+                    </p>
+                    <p class="text-xs text-gray-400">
+                        Diseñado y desarrollado por 
+                        <span class="text-indigo-400 font-semibold hover:text-indigo-300 transition duration-300">Levi Jafet y Abigail Espinosa</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu hamburguesa
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+    </script>
+</body>
+</html>

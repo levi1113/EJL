@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>EJL | Eventos · Temporadas y congresos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .nav-link-transparent {
+            position: relative;
+            color: white;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+        .nav-link-transparent::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        .nav-link-transparent:hover::after,
+        .nav-link-transparent.active::after {
+            width: 100%;
+        }
+        .season-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .season-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 40px -12px rgba(79, 70, 229, 0.3);
+        }
+        .theme-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .theme-item:hover {
+            transform: scale(1.05);
+            border-color: #4f46e5;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-content {
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 24px;
+            background: rgba(17, 24, 39, 0.95);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+        .modal-close {
+            position: sticky;
+            top: 16px;
+            float: right;
+            margin: 16px 16px 0 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+            position: relative;
+        }
+        .modal-close:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+        .event-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .event-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 35px -10px rgba(79, 70, 229, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-gray-900">
+
+    <!-- ========== NAVBAR TRANSPARENTE ========== -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-3 sm:py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <!-- Logo / Nombre -->
+                <div class="flex items-center space-x-2">
+                   <div class="w-10 h-10 sm:w-16 sm:h-16">
+                        <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain">
+                    </div>
+                    <div>
+                        <a href="index.html" class="text-base sm:text-xl md:text-2xl font-bold tracking-tight logo-text text-white">
+                            EJL<span class="text-indigo-300">.</span>
+                        </a>
+                        <p class="text-[8px] sm:text-[10px] md:text-xs text-white/80 -mt-1 hidden sm:block">Ejército Juvenil Libano</p>
+                    </div>
+                </div>
+                <!-- Enlaces desktop -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link-transparent active text-white">Inicio</a>
+                    <a href="nosotros.html" class="nav-link-transparent text-white">Nosotros</a>
+                    <a href="ubicacion.html" class="nav-link-transparent text-white">Ubicación</a>
+                    <a href="eventos.html" class="nav-link-transparent text-white">Eventos</a>
+                    <a href="galeria.html" class="nav-link-transparent text-white">Galeria</a>
+                    <a href="involucrate.html" class="nav-link-transparent text-white">Involúcrate</a>
+                </div>
+                <!-- Botón móvil -->
+                <div class="md:hidden">
+                    <button id="menuBtn" class="text-white focus:outline-none">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Menú móvil -->
+            <div id="mobileMenu" class="md:hidden hidden mt-3 sm:mt-4 p-3 sm:p-4 rounded-2xl bg-black/50 backdrop-blur-md">
+                <a href="index.html" class="block py-2 px-3 rounded-md text-white bg-white/20">Inicio</a>
+                <a href="nosotros.html" class="block py-2 px-3 rounded-md text-white hover:bg-white/10">Nosotros</a>
+                <a href="ubicacion.html" class="block py-2 px-3 rounded-md text-white hover:bg-white/10">Ubicación</a>
+                <a href="eventos.html" class="block py-2 px-3 rounded-md text-white hover:bg-white/10">Eventos</a>
+                <a href="galeria.html" class="block py-2 px-3 rounded-md text-white hover:bg-white/10">Galeria</a>
+                <a href="involucrate.html" class="block py-2 px-3 rounded-md text-white hover:bg-white/10">Involúcrate</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="relative pt-28 sm:pt-32 md:pt-40 pb-16 sm:pb-20 md:pb-28 bg-cover bg-center bg-no-repeat" style="background-image: url('./IMAGES/foto41.jpg');">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-indigo-300">Calendario vivo</span>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-3 sm:mt-4 tracking-tight">Nuestros eventos</h1>
+            <div class="w-16 sm:w-20 md:w-24 h-0.5 bg-gradient-to-r from-indigo-400 to-purple-400 mx-auto mt-4 sm:mt-5 md:mt-6 rounded-full"></div>
+            <p class="text-gray-200 mt-4 sm:mt-5 md:mt-6 max-w-2xl mx-auto text-sm sm:text-base md:text-lg px-4">
+                Temporadas, temas semanales y congresos que marcan nuestra generación.
+            </p>
+        </div>
+    </section>
+
+    <!-- ========== EVENTOS ESPECIALES (Premium Glass) ========== -->
+    <section class="relative py-20 sm:py-28 bg-gray-900 overflow-hidden">
+        <!-- Efecto de luz ambiental -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-0 left-0 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/5 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 sm:mb-16">
+                <div class="flex items-center justify-center gap-4 mb-4">
+                    <div class="w-12 h-px bg-gradient-to-r from-transparent to-indigo-500"></div>
+                    <span class="text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-indigo-400">Calendario especial</span>
+                    <div class="w-12 h-px bg-gradient-to-l from-transparent to-indigo-500"></div>
+                </div>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-2 tracking-tight">
+                    Eventos <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">especiales</span>
+                </h2>
+                <div class="w-20 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mt-5 rounded-full"></div>
+                <p class="text-gray-400 mt-5 max-w-2xl mx-auto text-sm sm:text-base">
+                    Congresos, retiros y celebraciones que marcan nuestro calendario anual
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Evento 1 -->
+                <div class="group relative">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl blur opacity-0 group-hover:opacity-50 transition duration-500"></div>
+                    <div class="relative bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 overflow-hidden transition-all duration-500 group-hover:border-indigo-400/50 group-hover:bg-white/10">
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="./IMAGES/foto3.jpg" alt="Congreso Misionero" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+                            <div class="absolute top-4 left-4">
+                                <span class="text-xs font-semibold px-3 py-1.5 rounded-full bg-indigo-500/30 backdrop-blur-sm text-indigo-200 border border-indigo-400/20">
+                                    Congreso
+                                </span>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <p class="text-white/60 text-sm font-light tracking-wide">Marzo 15 — 17</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white group-hover:text-indigo-300 transition duration-300">Congreso Misionero 2025</h3>
+                            <p class="text-gray-400 text-sm mt-3 leading-relaxed">
+                                Un fin de semana de fuego, propósito y entrega total. Una experiencia que transformará tu visión.
+                            </p>
+                            <div class="mt-5 flex items-center justify-between">
+                                <span class="text-xs text-gray-500 tracking-wider uppercase">Inscripciones abiertas</span>
+                                <a href="#" class="inline-flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition text-sm font-medium group-hover:gap-3 duration-300">
+                                    Explorar
+                                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evento 2 -->
+                <div class="group relative">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl blur opacity-0 group-hover:opacity-50 transition duration-500"></div>
+                    <div class="relative bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 overflow-hidden transition-all duration-500 group-hover:border-indigo-400/50 group-hover:bg-white/10">
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="./IMAGES/foto4.jpg" alt="Retiro de Jóvenes" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+                            <div class="absolute top-4 left-4">
+                                <span class="text-xs font-semibold px-3 py-1.5 rounded-full bg-purple-500/30 backdrop-blur-sm text-purple-200 border border-purple-400/20">
+                                    Retiro
+                                </span>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <p class="text-white/60 text-sm font-light tracking-wide">Mayo 2 — 4</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white group-hover:text-indigo-300 transition duration-300">Retiro de Jóvenes</h3>
+                            <p class="text-gray-400 text-sm mt-3 leading-relaxed">
+                                Desconéctate del mundo, conéctate con Dios. Un fin de semana de restauración y propósito.
+                            </p>
+                            <div class="mt-5 flex items-center justify-between">
+                                <span class="text-xs text-gray-500 tracking-wider uppercase">Plazas limitadas</span>
+                                <a href="#" class="inline-flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition text-sm font-medium group-hover:gap-3 duration-300">
+                                    Explorar
+                                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evento 3 -->
+                <div class="group relative">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl blur opacity-0 group-hover:opacity-50 transition duration-500"></div>
+                    <div class="relative bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 overflow-hidden transition-all duration-500 group-hover:border-indigo-400/50 group-hover:bg-white/10">
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="./IMAGES/foto5.jpg" alt="Noche de Adoración" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+                            <div class="absolute top-4 left-4">
+                                <span class="text-xs font-semibold px-3 py-1.5 rounded-full bg-emerald-500/30 backdrop-blur-sm text-emerald-200 border border-emerald-400/20">
+                                    Adoración
+                                </span>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <p class="text-white/60 text-sm font-light tracking-wide">Junio 21</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white group-hover:text-indigo-300 transition duration-300">Noche de Adoración</h3>
+                            <p class="text-gray-400 text-sm mt-3 leading-relaxed">
+                                Una velada de alabanza y adoración junto a toda la familia EJL. Una noche que no olvidarás.
+                            </p>
+                            <div class="mt-5 flex items-center justify-between">
+                                <span class="text-xs text-gray-500 tracking-wider uppercase">Entrada libre</span>
+                                <a href="#" class="inline-flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition text-sm font-medium group-hover:gap-3 duration-300">
+                                    Explorar
+                                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón ver todos -->
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center gap-3 text-gray-400 hover:text-white transition duration-300 text-sm font-medium group">
+                    <span class="w-8 h-px bg-gray-600 group-hover:bg-indigo-400 transition duration-300"></span>
+                    Ver todos los eventos
+                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- ========== TEMPORADAS MENSUALES ========== -->
+    <section class="py-16 sm:py-20 bg-gray-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10 sm:mb-12">
+                <span class="text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-indigo-400">Temporadas</span>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mt-2">Temas mensuales</h2>
+                <div class="w-16 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mt-3 rounded-full"></div>
+                <p class="text-gray-400 mt-4 text-sm sm:text-base max-w-2xl mx-auto">
+                    Cada mes un tema central, cada semana un subtema. Haz clic en cualquier imagen para ver el resumen.
+                </p>
+            </div>
+
+            <!-- Temporada: Enero -->
+            <div class="mb-16 sm:mb-20">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-500 to-transparent"></div>
+                    <h3 class="text-xl sm:text-2xl font-bold text-white">Enero · <span class="text-indigo-400">Nuevo Comienzo</span></h3>
+                    <div class="flex-1 h-0.5 bg-gradient-to-l from-indigo-500/30 to-transparent"></div>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Enero', 'Semana 1', 'Nuevo Comienzo', 'texto del tema 1', './IMAGES/foto2.jpg')">
+                        <img src="./IMAGES/foto2.jpg" alt="Tema 1" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 1</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Nuevo Comienzo</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Enero', 'Semana 2', 'Dejando el Pasado', 'texto del tema 2', './IMAGES/foto3.jpg')">
+                        <img src="./IMAGES/foto3.jpg" alt="Tema 2" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 2</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Dejando el Pasado</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Enero', 'Semana 3', 'Una Nueva Identidad', 'texto del tema 3', './IMAGES/foto4.jpg')">
+                        <img src="./IMAGES/foto4.jpg" alt="Tema 3" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 3</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Una Nueva Identidad</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Enero', 'Semana 4', 'Propósito y Visión', 'texto del tema 4', './IMAGES/foto5.jpg')">
+                        <img src="./IMAGES/foto5.jpg" alt="Tema 4" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 4</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Propósito y Visión</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Temporada: Febrero -->
+            <div class="mb-16 sm:mb-20">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-500 to-transparent"></div>
+                    <h3 class="text-xl sm:text-2xl font-bold text-white">Febrero · <span class="text-indigo-400">Amor y Comunidad</span></h3>
+                    <div class="flex-1 h-0.5 bg-gradient-to-l from-indigo-500/30 to-transparent"></div>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Febrero', 'Semana 1', 'El Amor de Dios', 'texto del tema 1', './IMAGES/foto6.jpg')">
+                        <img src="./IMAGES/foto6.jpg" alt="Tema 1" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 1</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">El Amor de Dios</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Febrero', 'Semana 2', 'Amar al Prójimo', 'texto del tema 2', './IMAGES/foto7.jpg')">
+                        <img src="./IMAGES/foto7.jpg" alt="Tema 2" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 2</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Amar al Prójimo</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Febrero', 'Semana 3', 'Comunidad y Fraternidad', 'texto del tema 3', './IMAGES/foto8.jpg')">
+                        <img src="./IMAGES/foto8.jpg" alt="Tema 3" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 3</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Comunidad y Fraternidad</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Febrero', 'Semana 4', 'El Amor en Acción', 'texto del tema 4', './IMAGES/foto12.jpg')">
+                        <img src="./IMAGES/foto12.jpg" alt="Tema 4" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 4</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">El Amor en Acción</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Temporada: Marzo -->
+            <div class="mb-16 sm:mb-20">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-500 to-transparent"></div>
+                    <h3 class="text-xl sm:text-2xl font-bold text-white">Marzo · <span class="text-indigo-400">Misiones y Servicio</span></h3>
+                    <div class="flex-1 h-0.5 bg-gradient-to-l from-indigo-500/30 to-transparent"></div>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Marzo', 'Semana 1', 'El Llamado Misionero', 'texto del tema 1', './IMAGES/foto2.jpg')">
+                        <img src="./IMAGES/foto2.jpg" alt="Tema 1" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 1</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">El Llamado Misionero</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Marzo', 'Semana 2', 'Servir con Alegría', 'texto del tema 2', './IMAGES/foto3.jpg')">
+                        <img src="./IMAGES/foto3.jpg" alt="Tema 2" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 2</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Servir con Alegría</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Marzo', 'Semana 3', 'Mi Casa, Mi Misión', 'texto del tema 3', './IMAGES/foto4.jpg')">
+                        <img src="./IMAGES/foto4.jpg" alt="Tema 3" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 3</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Mi Casa, Mi Misión</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Marzo', 'Semana 4', 'Hasta lo Último', 'texto del tema 4', './IMAGES/foto5.jpg')">
+                        <img src="./IMAGES/foto5.jpg" alt="Tema 4" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 4</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Hasta lo Último</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Temporada: Abril -->
+            <div class="mb-16 sm:mb-20">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-500 to-transparent"></div>
+                    <h3 class="text-xl sm:text-2xl font-bold text-white">Abril · <span class="text-indigo-400">Resurrección y Vida</span></h3>
+                    <div class="flex-1 h-0.5 bg-gradient-to-l from-indigo-500/30 to-transparent"></div>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Abril', 'Semana 1', 'La Cruz', 'texto del tema 1', './IMAGES/foto6.jpg')">
+                        <img src="./IMAGES/foto6.jpg" alt="Tema 1" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 1</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">La Cruz</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Abril', 'Semana 2', 'La Tumba Vacía', 'texto del tema 2', './IMAGES/foto7.jpg')">
+                        <img src="./IMAGES/foto7.jpg" alt="Tema 2" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 2</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">La Tumba Vacía</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Abril', 'Semana 3', 'Vida Nueva', 'texto del tema 3', './IMAGES/foto8.jpg')">
+                        <img src="./IMAGES/foto8.jpg" alt="Tema 3" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 3</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Vida Nueva</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Abril', 'Semana 4', 'Testigos de Su Gloria', 'texto del tema 4', './IMAGES/foto12.jpg')">
+                        <img src="./IMAGES/foto12.jpg" alt="Tema 4" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 4</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Testigos de Su Gloria</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Temporada: Mayo -->
+            <div class="mb-16 sm:mb-20">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-500 to-transparent"></div>
+                    <h3 class="text-xl sm:text-2xl font-bold text-white">Mayo · <span class="text-indigo-400">Familia y Herencia</span></h3>
+                    <div class="flex-1 h-0.5 bg-gradient-to-l from-indigo-500/30 to-transparent"></div>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Mayo', 'Semana 1', 'La Familia de Dios', 'texto del tema 1', './IMAGES/foto2.jpg')">
+                        <img src="./IMAGES/foto2.jpg" alt="Tema 1" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 1</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">La Familia de Dios</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Mayo', 'Semana 2', 'Honrar a los Padres', 'texto del tema 2', './IMAGES/foto3.jpg')">
+                        <img src="./IMAGES/foto3.jpg" alt="Tema 2" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 2</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Honrar a los Padres</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Mayo', 'Semana 3', 'Dejando un Legado', 'texto del tema 3', './IMAGES/foto4.jpg')">
+                        <img src="./IMAGES/foto4.jpg" alt="Tema 3" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 3</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Dejando un Legado</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Mayo', 'Semana 4', 'Generaciones Unidas', 'texto del tema 4', './IMAGES/foto5.jpg')">
+                        <img src="./IMAGES/foto5.jpg" alt="Tema 4" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 4</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Generaciones Unidas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Temporada: Junio -->
+            <div class="mb-0">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-500 to-transparent"></div>
+                    <h3 class="text-xl sm:text-2xl font-bold text-white">Junio · <span class="text-indigo-400">Fuego y Avivamiento</span></h3>
+                    <div class="flex-1 h-0.5 bg-gradient-to-l from-indigo-500/30 to-transparent"></div>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Junio', 'Semana 1', 'El Fuego del Espíritu', 'texto del tema 1', './IMAGES/foto6.jpg')">
+                        <img src="./IMAGES/foto6.jpg" alt="Tema 1" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 1</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">El Fuego del Espíritu</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Junio', 'Semana 2', 'Avivamiento Personal', 'texto del tema 2', './IMAGES/foto7.jpg')">
+                        <img src="./IMAGES/foto7.jpg" alt="Tema 2" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 2</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Avivamiento Personal</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Junio', 'Semana 3', 'Generación de Fuego', 'texto del tema 3', './IMAGES/foto8.jpg')">
+                        <img src="./IMAGES/foto8.jpg" alt="Tema 3" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 3</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Generación de Fuego</p>
+                        </div>
+                    </div>
+                    <div class="theme-item rounded-xl overflow-hidden border-2 border-white/10 hover:border-indigo-500/50" onclick="openModal('Junio', 'Semana 4', 'Hasta el Fin', 'texto del tema 4', './IMAGES/foto12.jpg')">
+                        <img src="./IMAGES/foto12.jpg" alt="Tema 4" class="w-full h-28 sm:h-32 md:h-40 object-cover">
+                        <div class="p-2 sm:p-3 bg-black/60 backdrop-blur-sm">
+                            <p class="text-white text-xs sm:text-sm font-medium">Semana 4</p>
+                            <p class="text-indigo-300 text-[10px] sm:text-xs">Hasta el Fin</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== MODAL PARA TEMAS ========== -->
+    <div id="themeModal" class="modal-overlay" onclick="closeModalOutside(event)">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="p-6 sm:p-8 md:p-10">
+                <!-- Imagen de fondo del tema -->
+                <div class="relative rounded-2xl overflow-hidden h-48 sm:h-56 md:h-64 mb-6" id="modalImageContainer">
+                    <img id="modalImage" src="" alt="Tema" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4">
+                        <span id="modalMonth" class="text-indigo-300 text-xs font-semibold tracking-wider uppercase">Enero</span>
+                        <h3 id="modalWeek" class="text-white text-lg font-bold">Semana 1</h3>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-0.5 bg-indigo-400"></div>
+                    <span class="text-indigo-300 text-xs uppercase tracking-wider font-semibold">Resumen del tema</span>
+                    <div class="w-8 h-0.5 bg-indigo-400"></div>
+                </div>
+
+                <h2 id="modalTitle" class="text-2xl md:text-3xl font-bold text-white mb-4">Título del Tema</h2>
+                
+                <div id="modalDescription" class="text-gray-300 leading-relaxed space-y-4 text-sm md:text-base">
+                    <p>Aquí va la descripción completa del tema. Puedes incluir el versículo clave, el objetivo de la semana, preguntas para reflexionar y el llamado a la acción.</p>
+                    <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+                        <p class="text-indigo-300 text-sm font-medium">📖 Versículo clave:</p>
+                        <p class="text-gray-300 text-sm italic">"Porque yo sé los pensamientos que tengo acerca de vosotros, dice Jehová, pensamientos de paz, y no de mal, para daros el fin que esperáis."</p>
+                        <p class="text-gray-400 text-xs mt-1">Jeremías 29:11</p>
+                    </div>
+                    <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+                        <p class="text-purple-300 text-sm font-medium">💡 Reflexiona:</p>
+                        <ul class="list-disc list-inside text-gray-300 text-sm space-y-1 mt-1">
+                            <li>¿Qué significa esto para tu vida hoy?</li>
+                            <li>¿Cómo puedes aplicar este mensaje?</li>
+                            <li>¿Qué te está diciendo Dios?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-white/10 flex flex-wrap gap-3">
+                    <span class="text-xs px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300">Enero 2025</span>
+                    <span class="text-xs px-3 py-1 rounded-full bg-purple-500/20 text-purple-300">Nuevo Comienzo</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-gray-900 border-t border-gray-800 pt-10 sm:pt-12 md:pt-16 pb-6 sm:pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+                <div class="text-center sm:text-left">
+                    <div class="flex items-center justify-center sm:justify-start space-x-2">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden flex-shrink-0">
+                            <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain">
+                        </div>
+                        <span class="text-xl font-bold text-white">EJL<span class="text-indigo-400">.</span></span>
+                    </div>
+                    <p class="mt-3 text-sm text-gray-400">Ejército Juvenil Libano<br>Amigos por siempre</p>
+                </div>
+                <div class="text-center sm:text-left">
+                    <h4 class="text-white font-semibold mb-3">Enlaces</h4>
+                    <ul class="space-y-1.5 text-sm">
+                        <li><a href="index.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Inicio</a></li>
+                        <li><a href="nosotros.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Nosotros</a></li>
+                        <li><a href="ubicacion.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Ubicación</a></li>
+                        <li><a href="eventos.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Eventos</a></li>
+                        <li><a href="galeria.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Galería</a></li>
+                        <li><a href="involucrate.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Involúcrate</a></li>
+                    </ul>
+                </div>
+                <div class="text-center sm:text-left">
+                    <h4 class="text-white font-semibold mb-3">Contacto</h4>
+                    <ul class="space-y-1.5 text-sm text-gray-400">
+                        <li><a href="mailto:ejl.casadeoracion@gmail.com" class="hover:text-indigo-400 transition duration-300">ejl.casadeoracion@gmail.com</a></li>
+                        <li><a href="tel:+527712077884" class="hover:text-indigo-400 transition duration-300">771 207 7884</a></li>
+                    </ul>
+                    <div class="mt-3 flex gap-3 justify-center sm:justify-start">
+                        <a href="https://www.instagram.com/ejl.oficialcdo" target="_blank" class="text-gray-400 hover:text-pink-500 transition duration-300">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.facebook.com/ejl.axs" target="_blank" class="text-gray-400 hover:text-blue-500 transition duration-300">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="text-center sm:text-left">
+                    <h4 class="text-white font-semibold mb-3">Dirección</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Calle Ángela Peralta No. 206<br>
+                        Colonia Del Castillo<br>
+                        Pachuca, Hidalgo
+                    </p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 sm:mt-10 pt-6 sm:pt-8">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
+                    <p class="text-xs sm:text-sm text-gray-500">© 2025 Ejército Juvenil Libano. Todos los derechos reservados.</p>
+                    <p class="text-xs text-gray-400">Diseñado y desarrollado por <span class="text-indigo-400 font-semibold hover:text-indigo-300 transition duration-300">Levi Jafet</span></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        // Menú hamburguesa
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+
+        // ========== MODAL ==========
+        function openModal(month, week, title, description, image) {
+            document.getElementById('modalMonth').textContent = month;
+            document.getElementById('modalWeek').textContent = week;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDescription').innerHTML = description;
+            document.getElementById('modalImage').src = image;
+            document.getElementById('themeModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('themeModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeModalOutside(e) {
+            if (e.target === document.getElementById('themeModal')) {
+                closeModal();
+            }
+        }
+
+        // Cerrar con ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

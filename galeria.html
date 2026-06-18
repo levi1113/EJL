@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>EJL | Galería · Momentos de fuego y gloria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .nav-link-transparent {
+            position: relative;
+            color: white;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+        .nav-link-transparent::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        .nav-link-transparent:hover::after,
+        .nav-link-transparent.active::after {
+            width: 100%;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .gallery-item img {
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.96);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            touch-action: none;
+        }
+        .modal.active { display: flex; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            touch-action: none;
+        }
+        .modal-track {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform;
+            touch-action: none;
+        }
+        .modal-track.dragging {
+            transition: none !important;
+        }
+        .modal-track img {
+            max-width: 90%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-select: none;
+            flex-shrink: 0;
+            transition: opacity 0.3s ease;
+            will-change: transform, opacity;
+        }
+        .modal-track .prev-img,
+        .modal-track .next-img {
+            position: absolute;
+            opacity: 0;
+            max-width: 90%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 1rem;
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            padding: 0 12px;
+            z-index: 20;
+        }
+        .modal-nav button {
+            pointer-events: auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-nav button:hover {
+            background: rgba(255,255,255,0.25);
+            transform: scale(1.1);
+            border-color: rgba(255,255,255,0.5);
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 30;
+            font-size: 20px;
+            color: white;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .modal-close:hover { transform: scale(1.1); background: rgba(255,255,255,0.2); }
+        .modal-download {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 30;
+        }
+        .modal-download:hover { background: rgba(255,255,255,0.25); transform: scale(1.1); }
+        .modal-counter {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            padding: 4px 16px;
+            border-radius: 30px;
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 30;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .modal-title {
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            padding: 4px 16px;
+            border-radius: 30px;
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 30;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        /* Logo de carga - aparece 2 segundos SOLO al abrir */
+        .logo-transition {
+            position: absolute;
+            inset: 0;
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(12px);
+            transition: opacity 0.5s ease;
+            opacity: 1;
+        }
+        .logo-transition.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .swipe-indicator {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.25);
+            font-size: 11px;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(4px);
+            padding: 5px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.05);
+            letter-spacing: 0.5px;
+            animation: pulseFade 2.5s ease-in-out infinite;
+        }
+        @keyframes pulseFade {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+        .swipe-indicator svg {
+            width: 14px;
+            height: 14px;
+        }
+        @media (min-width: 640px) {
+            .modal-nav { padding: 0 20px; }
+            .modal-nav button { width: 48px; height: 48px; }
+            .modal-close { top: 20px; right: 30px; width: 40px; height: 40px; font-size: 24px; }
+            .modal-download { bottom: 20px; right: 30px; width: 40px; height: 40px; }
+            .modal-counter { bottom: 20px; padding: 6px 20px; font-size: 14px; }
+            .modal-title { top: 20px; padding: 6px 20px; font-size: 14px; }
+            .swipe-indicator { display: none; }
+        }
+        @media (max-width: 639px) {
+            .swipe-indicator { display: flex; }
+        }
+    </style>
+</head>
+<body class="bg-gray-900">
+
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-3 sm:py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 sm:w-16 sm:h-16">
+                        <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain">
+                    </div>
+                    <div>
+                        <a href="index.html" class="text-base sm:text-xl md:text-2xl font-bold tracking-tight text-white">
+                            EJL<span class="text-indigo-300">.</span>
+                        </a>
+                        <p class="text-[8px] sm:text-[10px] md:text-xs text-white/80 -mt-1 hidden sm:block">Ejército Juvenil Libano</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link-transparent">Inicio</a>
+                    <a href="nosotros.html" class="nav-link-transparent">Nosotros</a>
+                    <a href="ubicacion.html" class="nav-link-transparent">Ubicación</a>
+                    <a href="eventos.html" class="nav-link-transparent">Eventos</a>
+                    <a href="galeria.html" class="nav-link-transparent active">Galería</a>
+                    <a href="involucrate.html" class="nav-link-transparent">Involúcrate</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menuBtn" class="text-white focus:outline-none">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobileMenu" class="md:hidden hidden mt-3 sm:mt-4 p-3 sm:p-4 rounded-2xl bg-black/50 backdrop-blur-md">
+                <a href="index.html" class="block py-2 px-3 rounded-md text-white bg-white/20">Inicio</a>
+                <a href="nosotros.html" class="block py-2 px-3 rounded-md text-white/80 hover:bg-white/10">Nosotros</a>
+                <a href="ubicacion.html" class="block py-2 px-3 rounded-md text-white/80 hover:bg-white/10">Ubicación</a>
+                <a href="eventos.html" class="block py-2 px-3 rounded-md text-white/80 hover:bg-white/10">Eventos</a>
+                <a href="galeria.html" class="block py-2 px-3 rounded-md text-white/80 hover:bg-white/10">Galería</a>
+                <a href="involucrate.html" class="block py-2 px-3 rounded-md text-white/80 hover:bg-white/10">Involúcrate</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative min-h-[40vh] sm:min-h-[50vh] flex items-center bg-cover bg-center bg-no-repeat" style="background-image: url('./IMAGES/foto21.jpg'); background-size: cover; background-position: center 30%;">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-indigo-300">Memorias vivas</span>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mt-3 sm:mt-4 tracking-tight">Nuestra galería</h1>
+            <div class="w-16 sm:w-20 md:w-24 h-0.5 bg-gradient-to-r from-indigo-400 to-purple-400 mx-auto mt-4 sm:mt-5 md:mt-6 rounded-full"></div>
+            <p class="text-gray-200 mt-4 sm:mt-5 md:mt-6 max-w-2xl mx-auto text-sm sm:text-base md:text-lg px-4">Momentos que capturan la esencia de nuestra familia, la adoración y el fuego del Espíritu Santo.</p>
+        </div>
+    </section>
+
+    <section class="py-12 sm:py-16 md:py-20 lg:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6" id="galleryGrid"></div>
+        </div>
+    </section>
+
+    <section class="py-12 sm:py-16 bg-gradient-to-r from-indigo-950/50 to-purple-950/50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <svg class="w-10 h-10 sm:w-12 sm:h-12 text-indigo-400/40 mx-auto mb-4 sm:mb-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+            </svg>
+            <p class="text-gray-300 text-base sm:text-lg md:text-xl italic leading-relaxed px-4">"Cada imagen captura un instante eterno, un momento donde el cielo tocó la tierra y vidas fueron transformadas por Su presencia."</p>
+            <p class="text-indigo-400 mt-3 sm:mt-4 font-semibold text-sm sm:text-base">— Ejército Juvenil Líbano</p>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-gray-900 border-t border-gray-800 pt-10 sm:pt-12 md:pt-16 pb-6 sm:pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+                <div class="text-center sm:text-left">
+                    <div class="flex items-center justify-center sm:justify-start space-x-2">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden flex-shrink-0">
+                            <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain">
+                        </div>
+                        <span class="text-xl font-bold text-white">EJL<span class="text-indigo-400">.</span></span>
+                    </div>
+                    <p class="mt-3 text-sm text-gray-400">Ejército Juvenil Libano<br>Amigos por siempre</p>
+                </div>
+                <div class="text-center sm:text-left">
+                    <h4 class="text-white font-semibold mb-3">Enlaces</h4>
+                    <ul class="space-y-1.5 text-sm">
+                        <li><a href="index.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Inicio</a></li>
+                        <li><a href="nosotros.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Nosotros</a></li>
+                        <li><a href="ubicacion.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Ubicación</a></li>
+                        <li><a href="eventos.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Eventos</a></li>
+                        <li><a href="galeria.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Galería</a></li>
+                        <li><a href="involucrate.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Involúcrate</a></li>
+                    </ul>
+                </div>
+                <div class="text-center sm:text-left">
+                    <h4 class="text-white font-semibold mb-3">Contacto</h4>
+                    <ul class="space-y-1.5 text-sm text-gray-400">
+                        <li><a href="mailto:ejl.casadeoracion@gmail.com" class="hover:text-indigo-400 transition duration-300">ejl.casadeoracion@gmail.com</a></li>
+                        <li><a href="tel:+527712077884" class="hover:text-indigo-400 transition duration-300">771 207 7884</a></li>
+                    </ul>
+                    <div class="mt-3 flex gap-3 justify-center sm:justify-start">
+                        <a href="https://www.instagram.com/ejl.oficialcdo" target="_blank" class="text-gray-400 hover:text-pink-500 transition duration-300">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.facebook.com/ejl.axs" target="_blank" class="text-gray-400 hover:text-blue-500 transition duration-300">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="text-center sm:text-left">
+                    <h4 class="text-white font-semibold mb-3">Dirección</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Calle Ángela Peralta No. 206<br>
+                        Colonia Del Castillo<br>
+                        Pachuca, Hidalgo
+                    </p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 sm:mt-10 pt-6 sm:pt-8">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
+                    <p class="text-xs sm:text-sm text-gray-500">© 2025 Ejército Juvenil Libano. Todos los derechos reservados.</p>
+                    <p class="text-xs text-gray-400">Diseñado y desarrollado por <span class="text-indigo-400 font-semibold hover:text-indigo-300 transition duration-300">Levi Jafet y Abigail Espinosa</span></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== MODAL CON SWIPE Y LOGO 2 SEGUNDOS SOLO AL ABRIR ========== -->
+    <div id="imageModal" class="modal">
+        <!-- LOGO DE CARGA (2 segundos SOLO al abrir) -->
+        <div id="logoTransition" class="logo-transition">
+            <div class="text-center">
+                <div class="w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 relative mx-auto">
+                    <div class="absolute inset-0 bg-indigo-500/20 rounded-full blur-3xl animate-pulse"></div>
+                    <video 
+                        id="transitionVideo"
+                        autoplay 
+                        muted 
+                        loop 
+                        playsinline
+                        class="w-full h-full object-contain relative z-10 drop-shadow-[0_0_60px_rgba(79,70,229,0.3)]"
+                        style="background: transparent;"
+                    >
+                        <source src="./IMAGES/ejl_logo2.mov" type="video/mp4">
+                        Tu navegador no soporta videos.
+                    </video>
+                </div>
+                <p class="text-white/30 text-xs mt-4 tracking-[0.2em] uppercase font-light">EJL · Amigos por siempre</p>
+            </div>
+        </div>
+
+        <div class="modal-close" id="modalClose">✕</div>
+        <div class="modal-download" id="modalDownload">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+        </div>
+        <div class="modal-title" id="modalTitle">EJL</div>
+        <div class="modal-counter" id="modalCounter">1 / 39</div>
+        <div class="swipe-indicator">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"></path></svg>
+            Desliza
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        </div>
+        <div class="modal-nav">
+            <button id="prevBtn"><svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+            <button id="nextBtn"><svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+        </div>
+        <div class="modal-wrapper" id="modalWrapper">
+            <div class="modal-track" id="modalTrack">
+                <img id="modalImage" src="" alt="Imagen ampliada">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== LISTA DE FOTOS ==========
+        const fotos = [];
+        for (let i = 2; i <= 8; i++) fotos.push(`./IMAGES/foto${i}.jpg`);
+        fotos.push(`./IMAGES/foto12.jpg`);
+        for (let i = 13; i <= 43; i++) fotos.push(`./IMAGES/foto${i}.jpg`);
+
+        // ========== GENERAR GALERÍA ==========
+        const galleryGrid = document.getElementById('galleryGrid');
+        fotos.forEach((foto, index) => {
+            const div = document.createElement('div');
+            div.className = 'gallery-item rounded-xl sm:rounded-2xl overflow-hidden shadow-xl';
+            div.innerHTML = `
+                <img src="${foto}" alt="Momento EJL" class="w-full h-48 sm:h-56 md:h-64 object-cover">
+                <div class="gallery-overlay"><p class="text-white text-sm font-medium">EJL</p></div>
+            `;
+            div.addEventListener('click', () => openModal(index));
+            galleryGrid.appendChild(div);
+        });
+
+        // ========== MODAL CON LOGO 2 SEGUNDOS SOLO AL ABRIR ==========
+        let currentIndex = 0;
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+        let isTransitioning = false;
+        let transitionTimeout = null;
+        let isFirstOpen = true;
+
+        const modal = document.getElementById('imageModal');
+        const modalWrapper = document.getElementById('modalWrapper');
+        const modalTrack = document.getElementById('modalTrack');
+        const modalImage = document.getElementById('modalImage');
+        const modalCounter = document.getElementById('modalCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const modalClose = document.getElementById('modalClose');
+        const modalDownload = document.getElementById('modalDownload');
+        const logoTransition = document.getElementById('logoTransition');
+        const transitionVideo = document.getElementById('transitionVideo');
+
+        function openModal(index) {
+            currentIndex = index;
+            
+            if (isFirstOpen) {
+                // Mostrar logo 2 segundos SOLO la primera vez
+                logoTransition.classList.remove('hidden');
+                logoTransition.style.opacity = '1';
+                modalImage.style.opacity = '0';
+                
+                transitionVideo.currentTime = 0;
+                transitionVideo.play();
+                
+                if (transitionTimeout) clearTimeout(transitionTimeout);
+                transitionTimeout = setTimeout(() => {
+                    logoTransition.style.opacity = '0';
+                    modalImage.style.opacity = '1';
+                    setTimeout(() => {
+                        logoTransition.classList.add('hidden');
+                    }, 500);
+                    transitionTimeout = null;
+                }, 2000);
+                
+                isFirstOpen = false;
+            } else {
+                // Mostrar imagen directamente
+                logoTransition.classList.add('hidden');
+                modalImage.style.opacity = '1';
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            modalCounter.textContent = `${currentIndex + 1} / ${fotos.length}`;
+            modalImage.src = fotos[currentIndex];
+            modalTrack.style.transform = 'translateX(0px)';
+            isTransitioning = false;
+        }
+
+        function updateImage() {
+            modalImage.src = fotos[currentIndex];
+            modalCounter.textContent = `${currentIndex + 1} / ${fotos.length}`;
+            modalTrack.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            modalTrack.style.transform = 'translateX(0px)';
+            modalImage.style.opacity = '1';
+        }
+
+        function nextImage() {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            const nextIndex = (currentIndex + 1) % fotos.length;
+            modalTrack.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            modalTrack.style.transform = 'translateX(-100px)';
+            modalImage.style.opacity = '0.3';
+            setTimeout(() => {
+                currentIndex = nextIndex;
+                updateImage();
+                setTimeout(() => { isTransitioning = false; }, 400);
+            }, 200);
+        }
+
+        function prevImage() {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            const prevIndex = (currentIndex - 1 + fotos.length) % fotos.length;
+            modalTrack.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            modalTrack.style.transform = 'translateX(100px)';
+            modalImage.style.opacity = '0.3';
+            setTimeout(() => {
+                currentIndex = prevIndex;
+                updateImage();
+                setTimeout(() => { isTransitioning = false; }, 400);
+            }, 200);
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            isTransitioning = false;
+            if (transitionTimeout) {
+                clearTimeout(transitionTimeout);
+                transitionTimeout = null;
+            }
+            modalTrack.style.transition = 'none';
+            modalTrack.style.transform = 'translateX(0px)';
+            modalImage.style.opacity = '0';
+            // Resetear para que el logo aparezca la próxima vez
+            isFirstOpen = true;
+            logoTransition.classList.remove('hidden');
+            logoTransition.style.opacity = '1';
+        }
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.href = fotos[currentIndex];
+            link.download = `EJL_${currentIndex + 1}.jpg`;
+            link.click();
+        }
+
+        // ========== SWIPE TÁCTIL ==========
+        modalWrapper.addEventListener('touchstart', (e) => {
+            if (isTransitioning) return;
+            startX = e.touches[0].clientX;
+            currentX = startX;
+            isDragging = true;
+            modalTrack.style.transition = 'none';
+        }, { passive: true });
+
+        modalWrapper.addEventListener('touchmove', (e) => {
+            if (!isDragging || isTransitioning) return;
+            const deltaX = e.touches[0].clientX - startX;
+            const percent = deltaX / window.innerWidth;
+            modalTrack.style.transform = `translateX(${deltaX}px)`;
+            const opacity = 1 - Math.min(Math.abs(percent), 1) * 0.6;
+            modalImage.style.opacity = Math.max(opacity, 0.2);
+        }, { passive: true });
+
+        modalWrapper.addEventListener('touchend', (e) => {
+            if (!isDragging || isTransitioning) return;
+            isDragging = false;
+            const deltaX = e.changedTouches[0].clientX - startX;
+            const threshold = window.innerWidth * 0.15;
+            
+            if (deltaX < -threshold) {
+                nextImage();
+            } else if (deltaX > threshold) {
+                prevImage();
+            } else {
+                modalTrack.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                modalTrack.style.transform = 'translateX(0px)';
+                modalImage.style.opacity = '1';
+            }
+            modalImage.style.opacity = '1';
+        }, { passive: true });
+
+        // ========== DRAG CON MOUSE ==========
+        modalWrapper.addEventListener('mousedown', (e) => {
+            if (isTransitioning || e.button !== 0) return;
+            startX = e.clientX;
+            currentX = startX;
+            isDragging = true;
+            modalTrack.style.transition = 'none';
+            modalWrapper.style.cursor = 'grabbing';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging || isTransitioning) return;
+            const deltaX = e.clientX - startX;
+            modalTrack.style.transform = `translateX(${deltaX}px)`;
+            const opacity = 1 - Math.min(Math.abs(deltaX / window.innerWidth), 1) * 0.6;
+            modalImage.style.opacity = Math.max(opacity, 0.2);
+        });
+
+        document.addEventListener('mouseup', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            modalWrapper.style.cursor = 'grab';
+            const deltaX = e.clientX - startX;
+            const threshold = window.innerWidth * 0.12;
+            
+            if (deltaX < -threshold) {
+                nextImage();
+            } else if (deltaX > threshold) {
+                prevImage();
+            } else {
+                modalTrack.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                modalTrack.style.transform = 'translateX(0px)';
+                modalImage.style.opacity = '1';
+            }
+            modalImage.style.opacity = '1';
+        });
+
+        // ========== BOTONES Y TECLADO ==========
+        prevBtn.onclick = (e) => { e.stopPropagation(); prevImage(); };
+        nextBtn.onclick = (e) => { e.stopPropagation(); nextImage(); };
+        modalClose.onclick = closeModal;
+        modalDownload.onclick = downloadImage;
+        modal.onclick = (e) => { if (e.target === modal) closeModal(); };
+
+        document.onkeydown = (e) => {
+            if (!modal.classList.contains('active')) return;
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'Escape') closeModal();
+        };
+
+        // ========== MENÚ HAMBURGUESA ==========
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.onclick = () => mobileMenu.classList.toggle('hidden');
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.onclick = () => mobileMenu.classList.add('hidden');
+            });
+        }
+    </script>
+</body>
+</html>

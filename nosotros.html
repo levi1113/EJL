@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>EJL | Nosotros · Nuestra historia</title>
+    <!-- Tailwind CSS + Fuente Inter -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
+        }
+        .nav-link-transparent {
+            position: relative;
+            color: white;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+        .nav-link-transparent::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        .nav-link-transparent:hover::after,
+        .nav-link-transparent.active::after {
+            width: 100%;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+        }
+        .nav-link {
+            position: relative;
+            color: #4b5563;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #4f46e5;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        .nav-link.active {
+            color: #4f46e5;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-800">
+
+    <!-- ========== NAVBAR TRANSPARENTE ========== -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-3 sm:py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <!-- Logo / Nombre -->
+                <div class="flex items-center space-x-2">
+                   <div class="w-10 h-10 sm:w-16 sm:h-16">
+                        <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain">
+                    </div>
+                    <div>
+                        <a href="index.html" class="text-base sm:text-xl md:text-2xl font-bold tracking-tight logo-text text-white">
+                            EJL<span class="text-indigo-300">.</span>
+                        </a>
+                        <p class="text-[8px] sm:text-[10px] md:text-xs text-white/80 -mt-1 hidden sm:block">Ejército Juvenil Libano</p>
+                    </div>
+                </div>
+                <!-- Enlaces desktop -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link-transparent active text-white">Inicio</a>
+                    <a href="nosotros.html" class="nav-link-transparent text-white">Nosotros</a>
+                    <a href="ubicacion.html" class="nav-link-transparent text-white">Ubicación</a>
+                    <a href="eventos.html" class="nav-link-transparent text-white">Eventos</a>
+                    <a href="galeria.html" class="nav-link-transparent text-white">Galeria</a>
+                    <a href="involucrate.html" class="nav-link-transparent text-white">Involúcrate</a>
+                </div>
+                <!-- Botón móvil -->
+                <div class="md:hidden">
+                    <button id="menuBtn" class="text-white focus:outline-none">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Menú móvil -->
+            <div id="mobileMenu" class="md:hidden hidden mt-3 sm:mt-4 p-3 sm:p-4 rounded-2xl bg-black/50 backdrop-blur-md">
+                <a href="index.html" class="block py-2 px-3 rounded-md text-white bg-white/20">Inicio</a>
+                <a href="nosotros.html" class="block py-2 px-3 rounded-md text-white hover:bg-white/10">Nosotros</a>
+                <a href="ubicacion.html" class="block py-2 px-3 rounded-md text-white hover:bg-white/10">Ubicación</a>
+                <a href="eventos.html" class="block py-2 px-3 rounded-md text-white hover:bg-white/10">Eventos</a>
+                <a href="galeria.html" class="block py-2 px-3 rounded-md text-white hover:bg-white/10">Galeria</a>
+                <a href="involucrate.html" class="block py-2 px-3 rounded-md text-white hover:bg-white/10">Involúcrate</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== HERO DE NOSOTROS ========== -->
+    <section class="relative py-12 sm:py-16 md:py-20 lg:py-28 overflow-hidden">
+        <!-- Fondo con imagen -->
+        <div id="heroBg" class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700" style="background-image: url('./IMAGES/foto2.jpg');">
+            <div class="absolute inset-0 bg-black/30"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/30 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-indigo-300">Quienes somos</span>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-3 sm:mt-4 tracking-tight">
+                Nuestra historia
+            </h1>
+            <div class="w-16 sm:w-20 md:w-24 h-0.5 bg-gradient-to-r from-indigo-400 to-purple-400 mx-auto mt-4 sm:mt-5 md:mt-6 rounded-full"></div>
+            <p class="text-gray-200 mt-4 sm:mt-5 md:mt-6 max-w-2xl mx-auto text-sm sm:text-base md:text-lg px-4">
+                Casi nueve decadas de fuego, proposito y generaciones que han rendido su corazon al Señor.
+            </p>
+        </div>
+    </section>
+
+    <!-- ========== TIMELINE DE IMAGENES ========== -->
+    <section class="relative py-8 sm:py-10 md:py-12 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
+                
+                <div onclick="cambiarFondo('./IMAGES/foto2.jpg', this)" class="group cursor-pointer">
+                    <div class="relative h-36 sm:h-44 md:h-48 lg:h-56 rounded-xl overflow-hidden border-2 transition-all duration-300 hover:scale-105 hover:border-indigo-400" id="card-foto2">
+                        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('./IMAGES/foto2.jpg');"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 sm:p-3">
+                            <p class="text-indigo-300 text-[10px] sm:text-xs font-bold">1937</p>
+                            <p class="text-white text-xs sm:text-sm font-medium">Los inicios</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div onclick="cambiarFondo('./IMAGES/foto3.jpg', this)" class="group cursor-pointer">
+                    <div class="relative h-36 sm:h-44 md:h-48 lg:h-56 rounded-xl overflow-hidden border-2 border-transparent transition-all duration-300 hover:scale-105 hover:border-indigo-400">
+                        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('./IMAGES/foto3.jpg');"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 sm:p-3">
+                            <p class="text-indigo-300 text-[10px] sm:text-xs font-bold">1940-1960</p>
+                            <p class="text-white text-xs sm:text-sm font-medium">Crecimiento</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div onclick="cambiarFondo('./IMAGES/foto4.jpg', this)" class="group cursor-pointer">
+                    <div class="relative h-36 sm:h-44 md:h-48 lg:h-56 rounded-xl overflow-hidden border-2 border-transparent transition-all duration-300 hover:scale-105 hover:border-indigo-400">
+                        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('./IMAGES/foto4.jpg');"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 sm:p-3">
+                            <p class="text-indigo-300 text-[10px] sm:text-xs font-bold">1970-1980</p>
+                            <p class="text-white text-xs sm:text-sm font-medium">Consolidacion</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div onclick="cambiarFondo('./IMAGES/foto5.jpg', this)" class="group cursor-pointer">
+                    <div class="relative h-36 sm:h-44 md:h-48 lg:h-56 rounded-xl overflow-hidden border-2 border-transparent transition-all duration-300 hover:scale-105 hover:border-indigo-400">
+                        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('./IMAGES/foto5.jpg');"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 sm:p-3">
+                            <p class="text-indigo-300 text-[10px] sm:text-xs font-bold">1990-2000</p>
+                            <p class="text-white text-xs sm:text-sm font-medium">Legado</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div onclick="cambiarFondo('./IMAGES/foto6.jpg', this)" class="group cursor-pointer">
+                    <div class="relative h-36 sm:h-44 md:h-48 lg:h-56 rounded-xl overflow-hidden border-2 border-transparent transition-all duration-300 hover:scale-105 hover:border-indigo-400">
+                        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('./IMAGES/foto6.jpg');"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 sm:p-3">
+                            <p class="text-indigo-300 text-[10px] sm:text-xs font-bold">2010 - Hoy</p>
+                            <p class="text-white text-xs sm:text-sm font-medium">Generacion actual</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CONTENIDO DE LA HISTORIA ========== -->
+    <section class="relative py-12 sm:py-16 md:py-20 lg:py-24 bg-gray-900">
+        <!-- Fondo que cambia con las imagenes -->
+        <div id="historyBg" class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700" style="background-image: url('./IMAGES/foto2.jpg');">
+            <div class="absolute inset-0 bg-black/25"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/30 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative bg-black/40 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-white/20 p-5 sm:p-6 md:p-8 lg:p-12 transition-all duration-500">
+                
+                <div class="flex items-center justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+                    <div class="w-8 sm:w-12 h-px bg-indigo-400"></div>
+                    <span class="text-indigo-300 text-[10px] sm:text-xs uppercase tracking-wider font-semibold">Reseña historica</span>
+                    <div class="w-8 sm:w-12 h-px bg-indigo-400"></div>
+                </div>
+
+                <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white text-center mb-6 sm:mb-8 px-2">
+                    Ejército Juvenil Líbano: <span class="text-indigo-300">Una herencia de fuego y propósito</span>
+                </h2>
+
+                <div class="space-y-4 sm:space-y-5 text-gray-200 leading-relaxed text-sm sm:text-base">
+                    <p>
+                        Nuestra historia comenzó en <span class="text-indigo-300 font-semibold">1937</span>, cuando un grupo de jóvenes, bajo la guía del pastor Andrés Ornelas, decidió buscar con fervor la promesa del Espíritu Santo.
+                    </p>
+                    <p>
+                        Desde aquel derramamiento glorioso en el templo de Sarón y la histórica vivencia en Tacubaya, donde la presencia de Dios fue tan palpable, hemos sido semillero de líderes, pastores y siervos dedicados a la obra.
+                    </p>
+                    <p>
+                        A lo largo de casi <span class="text-indigo-300 font-semibold">90 años</span>, hemos visto generaciones pasar, pero hoy nuestra historia no es solo un recuerdo de 1937 o 1983; es una llama viva que sigue encendiendo los corazones de quienes buscamos la pureza y el servicio al Señor.
+                    </p>
+                </div>
+
+                <div class="mt-8 sm:mt-10 pt-5 sm:pt-6 border-t border-white/20 text-center">
+                    <p class="text-indigo-300 italic text-base sm:text-lg md:text-xl">
+                        "Jóvenes, les escribo porque son fuertes, la palabra de Dios permanece en ustedes"
+                    </p>
+                    <p class="text-gray-400 text-xs sm:text-sm mt-2 sm:mt-3">
+                        1 Juan 2:14
+                    </p>
+                </div>
+            </div>
+
+            <p class="text-center text-gray-400 text-xs sm:text-sm mt-6 sm:mt-8 flex items-center justify-center gap-2">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Haz clic en las imágenes para cambiar el fondo
+            </p>
+        </div>
+    </section>
+
+    <!-- ========== SECCIÓN VIDEO DE NOSOTROS (HORIZONTAL FULL WIDTH) ========== -->
+    <section class="relative py-16 sm:py-20 md:py-24 bg-gray-900 overflow-hidden">
+        <!-- Efecto de luz ambiental -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-0 right-0 w-80 h-80 sm:w-96 sm:h-96 bg-indigo-600/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 w-80 h-80 sm:w-96 sm:h-96 bg-purple-600/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-8 sm:gap-10 md:gap-12 lg:gap-16">
+                
+                <!-- ===== COLUMNA IZQUIERDA: TEXTO ===== -->
+                <div class="w-full lg:w-2/5 text-center lg:text-left">
+                    <!-- Badge -->
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/20 border border-indigo-500/20 text-indigo-300 text-xs font-medium tracking-wider uppercase mb-4">
+                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                        Conoce nuestra historia
+                    </div>
+
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-3 leading-tight tracking-tight">
+                        Somos <br class="hidden sm:block">
+                        <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">herencia viva</span>
+                    </h2>
+
+                    <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 mt-4 rounded-full"></div>
+
+                    <p class="text-gray-300 text-base sm:text-lg mt-4 leading-relaxed max-w-lg lg:max-w-none">
+                        Una generación que comenzó en 1937 y sigue en pie. 
+                        <span class="text-indigo-300 font-medium">Casi 90 años de fuego y propósito</span> que no se han apagado.
+                    </p>
+
+                    <p class="text-gray-400 text-sm sm:text-base mt-3 leading-relaxed max-w-lg lg:max-w-none">
+                        No somos perfectos, pero somos auténticos. No somos religiosos, pero <span class="text-white/80">amamos a Jesús con todo nuestro corazon.</span>
+                    </p>
+
+                    <!-- Frase destacada -->
+                    <div class="mt-6 p-4 sm:p-5 bg-white/5 rounded-2xl border border-white/10 max-w-lg lg:max-w-none">
+                        <p class="text-indigo-300 text-sm sm:text-base italic leading-relaxed">
+                            "Somos una herencia de fuego. Una llama que no se apaga y que sigue encendiendo corazones."
+                        </p>
+                        <p class="text-gray-500 text-xs mt-2">— Abi Espinosa</p>
+                    </div>
+                </div>
+
+                <!-- ===== COLUMNA DERECHA: VIDEO HORIZONTAL FULL WIDTH ===== -->
+                <div class="w-full lg:w-3/5 flex justify-center lg:justify-end">
+                    <div class="relative w-full">
+                        <!-- Glow detrás del video -->
+                        <div class="absolute -inset-4 bg-gradient-to-r from-indigo-600/20 to-purple-600/20 rounded-3xl blur-2xl"></div>
+                        
+                        <!-- Contenedor del video horizontal (16:9) ocupando todo el ancho -->
+                        <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/30 backdrop-blur-sm">
+                            <div class="relative w-full" style="aspect-ratio: 16/9;">
+                                <video 
+                                    class="absolute inset-0 w-full h-full object-contain cursor-pointer bg-black"
+                                    controls
+                                    playsinline
+                                    poster="./IMAGES/video2-poster.jpg"
+                                >
+                                    <source src="./IMAGES/ejl_video2.MOV" type="video/mp4">
+                                    Tu navegador no soporta videos.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-gray-900 border-t border-gray-800 pt-10 sm:pt-12 md:pt-16 pb-6 sm:pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+                <!-- Columna 1 - Logo y descripción -->
+                <div class="text-center sm:text-left">
+                    <div class="flex items-center justify-center sm:justify-start space-x-2">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden flex-shrink-0">
+                            <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain">
+                        </div>
+                        <span class="text-xl font-bold text-white">EJL<span class="text-indigo-400">.</span></span>
+                    </div>
+                    <p class="mt-3 text-sm text-gray-400">Ejército Juvenil Libano<br>Amigos por siempre</p>
+                </div>
+
+                <!-- Columna 2 - Enlaces -->
+                <div class="text-center sm:text-left">
+                    <h4 class="text-white font-semibold mb-3">Enlaces</h4>
+                    <ul class="space-y-1.5 text-sm">
+                        <li><a href="index.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Inicio</a></li>
+                        <li><a href="nosotros.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Nosotros</a></li>
+                        <li><a href="ubicacion.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Ubicación</a></li>
+                        <li><a href="eventos.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Eventos</a></li>
+                        <li><a href="galeria.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Galería</a></li>
+                        <li><a href="involucrate.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Involúcrate</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 3 - Contacto -->
+                <div class="text-center sm:text-left">
+                    <h4 class="text-white font-semibold mb-3">Contacto</h4>
+                    <ul class="space-y-1.5 text-sm text-gray-400">
+                        <li>
+                            <a href="mailto:ejl.casadeoracion@gmail.com" class="hover:text-indigo-400 transition duration-300">
+                                ejl.casadeoracion@gmail.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+527712077884" class="hover:text-indigo-400 transition duration-300">
+                                771 207 7884
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="mt-3 flex gap-3 justify-center sm:justify-start">
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/ejl.oficialcdo" target="_blank" class="text-gray-400 hover:text-pink-500 transition duration-300" aria-label="Instagram">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                            </svg>
+                        </a>
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/ejl.axs" target="_blank" class="text-gray-400 hover:text-blue-500 transition duration-300" aria-label="Facebook">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna 4 - Dirección -->
+                <div class="text-center sm:text-left">
+                    <h4 class="text-white font-semibold mb-3">Dirección</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Calle Ángela Peralta No. 206<br>
+                        Colonia Del Castillo<br>
+                        Pachuca, Hidalgo
+                    </p>
+                </div>
+            </div>
+
+            <!-- Línea divisoria y créditos -->
+            <div class="border-t border-gray-800 mt-8 sm:mt-10 pt-6 sm:pt-8">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
+                    <p class="text-xs sm:text-sm text-gray-500">
+                        © 2025 Ejército Juvenil Libano. Todos los derechos reservados.
+                    </p>
+                    <p class="text-xs text-gray-400">
+                        Diseñado y desarrollado por 
+                        <span class="text-indigo-400 font-semibold hover:text-indigo-300 transition duration-300">Levi Jafet y Abigail Espinosa</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu hamburguesa
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+
+        // Funcion para cambiar fondo en ambas secciones (hero + historia)
+        function cambiarFondo(imagenUrl, elemento) {
+            // Cambiar fondo del hero
+            const heroBg = document.getElementById('heroBg');
+            if (heroBg) {
+                heroBg.style.backgroundImage = `url('${imagenUrl}')`;
+            }
+            
+            // Cambiar fondo de la seccion historia
+            const historyBg = document.getElementById('historyBg');
+            if (historyBg) {
+                historyBg.style.backgroundImage = `url('${imagenUrl}')`;
+            }
+            
+            // Resetear bordes de todas las cards
+            const todasLasCards = document.querySelectorAll('.grid.grid-cols-2 > div .relative');
+            todasLasCards.forEach(card => {
+                card.classList.remove('border-indigo-400');
+                card.classList.add('border-transparent');
+            });
+            
+            // Marcar la card clickeada
+            const cardClick = elemento.querySelector('.relative');
+            if (cardClick) {
+                cardClick.classList.remove('border-transparent');
+                cardClick.classList.add('border-indigo-400');
+            }
+        }
+        
+        // Activar borde en la primera card al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            const primeraCard = document.querySelector('.grid.grid-cols-2 > div .relative');
+            if (primeraCard) {
+                primeraCard.classList.remove('border-transparent');
+                primeraCard.classList.add('border-indigo-400');
+            }
+        });
+    </script>
+</body>
+</html>
