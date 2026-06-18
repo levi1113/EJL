@@ -11,7 +11,6 @@
         * {
             font-family: 'Inter', sans-serif;
         }
-        /* Transiciones y efectos */
         .hover-lift {
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
@@ -19,7 +18,6 @@
             transform: translateY(-4px);
             box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
         }
-        /* Navbar links - versión transparente (blanco) */
         .nav-link-transparent {
             position: relative;
             color: white;
@@ -36,26 +34,18 @@
             background-color: white;
             transition: width 0.3s ease;
         }
-        .nav-link-transparent:hover::after,
-        .nav-link-transparent.active::after {
+        .nav-link-transparent:hover::after, .nav-link-transparent.active::after {
             width: 100%;
         }
-        /* Cuando el navbar cambia a fondo blanco (scroll) */
         .navbar-scrolled {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(8px);
             border-bottom: 1px solid rgba(0,0,0,0.05);
             transition: all 0.3s;
         }
-        .navbar-scrolled .nav-link-transparent {
-            color: #1f2937;
-        }
-        .navbar-scrolled .nav-link-transparent::after {
-            background-color: #4f46e5;
-        }
-        .navbar-scrolled .logo-text {
-            color: #1f2937;
-        }
+        .navbar-scrolled .nav-link-transparent { color: #1f2937; }
+        .navbar-scrolled .nav-link-transparent::after { background-color: #4f46e5; }
+        .navbar-scrolled .logo-text { color: #1f2937; }
         .btn-primary {
             background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
             transition: all 0.3s ease;
@@ -64,7 +54,7 @@
             transform: scale(1.02);
             box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
         }
-                /* ===== ANIMACIONES PARA TAILWIND ===== */
+        /* ===== ANIMACIONES ===== */
         @keyframes scroll-right {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
@@ -85,52 +75,56 @@
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
         }
+        /* ===== OPTIMIZACIÓN MÓVIL ===== */
+        @media (max-width: 640px) {
+            .frase-movil { font-size: 6vw !important; }
+        }
+        .contenido-principal {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .seccion-flexible {
+            flex: 1 1 auto;
+            width: 100%;
+        }
+        /* ===== OPTIMIZACIÓN PARA MÓVIL: RENDERIZADO FLUIDO ===== */
+        @media (max-width: 768px) {
+            #logoSection,
+            #heroSection,
+            .seccion-flexible,
+            #informacion,
+            .seccion-eventos {
+                content-visibility: auto;
+                contain-intrinsic-size: auto 800px;
+            }
+            #logoSection video {
+                content-visibility: auto;
+                contain-intrinsic-size: auto 500px;
+            }
+        }
     </style>
 </head>
 <body class="bg-white text-gray-800">
 
-    <!-- ========== NAVBAR TRANSPARENTE (cambia con scroll) ========== -->
+    <!-- ========== NAVBAR TRANSPARENTE ========== -->
     <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-3 sm:py-4">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
                 <!-- Logo / Nombre -->
                 <div class="flex items-center space-x-2">
-                   <div class="w-10 h-10 sm:w-16 sm:h-16">
-                        <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain">
+                   <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-16 md:h-16">
+                        <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain" loading="lazy">
                     </div>
                     <div>
-                        <a href="index.html" class="text-base sm:text-xl md:text-2xl font-bold tracking-tight logo-text text-white">
+                        <a href="index.html" class="text-sm sm:text-base md:text-xl lg:text-2xl font-bold tracking-tight logo-text text-white">
                             EJL<span class="text-indigo-300">.</span>
                         </a>
                         <p class="text-[8px] sm:text-[10px] md:text-xs text-white/80 -mt-1 hidden sm:block">Ejército Juvenil Libano</p>
                     </div>
                 </div>
-                <!-- ===== BADGE MERCH PREMIUM ===== -->
-                <div class="hidden md:flex items-center mx-3">
-                    <a href="merch.html" 
-                       class="group relative flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/15 hover:border-indigo-400/50 transition-all duration-500 hover:bg-indigo-500/10 shadow-lg shadow-transparent hover:shadow-indigo-500/10">
-                        <!-- Punto decorativo animado -->
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 group-hover:bg-indigo-300 transition-colors duration-500 animate-pulse"></span>
-                        
-                        <!-- Texto -->
-                        <span class="text-white/80 text-[11px] font-light tracking-[0.2em] uppercase group-hover:text-white transition-colors duration-300">Tienda</span>
-                        
-                        <!-- Separador elegante -->
-                        <span class="w-px h-4 bg-white/10 group-hover:bg-indigo-400/30 transition-colors duration-500"></span>
-                        
-                        <!-- Texto principal -->
-                        <span class="text-white font-medium text-[11px] tracking-[0.15em] uppercase group-hover:text-indigo-300 transition-colors duration-300">Merch</span>
-                        
-                        <!-- Icono de flecha -->
-                        <svg class="w-3.5 h-3.5 text-white/40 group-hover:text-indigo-400 transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                        
-                        <!-- Efecto de luz en hover -->
-                        <span class="absolute -inset-px rounded-full bg-gradient-to-r from-indigo-500/0 via-indigo-500/5 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-sm"></span>
-                    </a>
-                </div>
-                <!-- Enlaces desktop -->
+
+                <!-- Enlaces desktop (ocultos en móvil) -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="index.html" class="nav-link-transparent active">Inicio</a>
                     <a href="nosotros.html" class="nav-link-transparent">Nosotros</a>
@@ -139,16 +133,36 @@
                     <a href="galeria.html" class="nav-link-transparent">Galeria</a>
                     <a href="involucrate.html" class="nav-link-transparent">Involúcrate</a>
                 </div>
-                <!-- Botón móvil -->
-                <div class="md:hidden">
-                    <button id="menuBtn" class="text-white focus:outline-none">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
+
+                <!-- BOTÓN MERCH (visible en desktop y en móvil) -->
+                <div class="flex items-center gap-2">
+                    <!-- Badge Merch para desktop -->
+                    <div class="hidden md:flex items-center mx-3">
+                        <a href="merch.html" 
+                           class="group relative flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/15 hover:border-indigo-400/50 transition-all duration-500 hover:bg-indigo-500/10 shadow-lg shadow-transparent hover:shadow-indigo-500/10">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 group-hover:bg-indigo-300 transition-colors duration-500 animate-pulse"></span>
+                            <span class="text-white/80 text-[11px] font-light tracking-[0.2em] uppercase group-hover:text-white transition-colors duration-300">Tienda</span>
+                            <span class="w-px h-4 bg-white/10 group-hover:bg-indigo-400/30 transition-colors duration-500"></span>
+                            <span class="text-white font-medium text-[11px] tracking-[0.15em] uppercase group-hover:text-indigo-300 transition-colors duration-300">Merch</span>
+                            <svg class="w-3.5 h-3.5 text-white/40 group-hover:text-indigo-400 transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                            <span class="absolute -inset-px rounded-full bg-gradient-to-r from-indigo-500/0 via-indigo-500/5 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-sm"></span>
+                        </a>
+                    </div>
+
+                    <!-- Botón hamburguesa -->
+                    <div class="md:hidden">
+                        <button id="menuBtn" class="text-white focus:outline-none">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <!-- Menú móvil (fondo oscuro semitransparente) -->
+
+            <!-- MENÚ MÓVIL (con Merch incluido) -->
             <div id="mobileMenu" class="md:hidden hidden mt-4 p-4 rounded-2xl bg-black/50 backdrop-blur-md">
                 <a href="index.html" class="block py-2 px-3 rounded-md text-white bg-white/20">Inicio</a>
                 <a href="nosotros.html" class="block py-2 px-3 rounded-md text-white/80 hover:bg-white/10">Nosotros</a>
@@ -156,526 +170,445 @@
                 <a href="eventos.html" class="block py-2 px-3 rounded-md text-white/80 hover:bg-white/10">Eventos</a>
                 <a href="galeria.html" class="block py-2 px-3 rounded-md text-white/80 hover:bg-white/10">Galeria</a>
                 <a href="involucrate.html" class="block py-2 px-3 rounded-md text-white/80 hover:bg-white/10">Involúcrate</a>
+                <!-- Merch en móvil -->
+                <a href="merch.html" class="block py-2 px-3 rounded-md text-indigo-300 hover:bg-white/10 border-t border-white/10 mt-2 pt-2">🛒 Merch</a>
             </div>
         </div>
     </nav>
 
-    <!-- ========== SECCIÓN LOGO GIGANTE CON FRASES DETRÁS ========== -->
-    <section id="logoSection" class="relative w-full h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat overflow-hidden cursor-pointer"
-         style="background-image: url('./IMAGES/foto51.jpg');"
-         onclick="scrollToHero()">
-        
-        <div class="absolute inset-0 bg-black/40 z-0"></div>
-        
-        <!-- ===== DIFUMINADO INFERIOR ===== -->
-        <div class="absolute bottom-0 left-0 right-0 h-64 z-10 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 right-0 h-32 z-10 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
-        
-        <div class="absolute inset-0 flex items-center justify-center z-0">
-            <div class="w-[800px] h-[800px] sm:w-[1000px] sm:h-[1000px] md:w-[1400px] md:h-[1400px] bg-indigo-500/20 rounded-full blur-3xl animate-pulse"></div>
-        </div>
+    <!-- ========== CONTENIDO PRINCIPAL ========== -->
+    <div class="contenido-principal">
 
-        <!-- ===== FRASES GIGANTES DETRÁS DEL LOGO ===== -->
-        <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <!-- ========== SECCIÓN LOGO GIGANTE ========== -->
+        <section id="logoSection" class="seccion-flexible relative w-full h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat overflow-hidden cursor-pointer"
+                 style="background-image: url('./IMAGES/foto51.jpg');"
+                 onclick="scrollToHero()">
             
-            <!-- Frase 1: BLANCA -->
-            <div class="absolute top-[15%] w-full animate-[scroll-right_20s_linear_infinite]">
-                <span class="block text-[8vw] sm:text-[6vw] md:text-[5vw] font-bold uppercase tracking-[0.15em] text-white/20 text-center whitespace-nowrap"
-                      style="text-shadow: 0 0 60px rgba(255,255,255,0.1), 0 0 120px rgba(255,255,255,0.05);">
-                    Ejército Juvenil Líbano
-                </span>
+            <div class="absolute inset-0 bg-black/40 z-0"></div>
+            <div class="absolute bottom-0 left-0 right-0 h-32 sm:h-48 md:h-64 z-10 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+            <div class="absolute inset-0 flex items-center justify-center z-0">
+                <div class="w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] md:w-[1000px] md:h-[1000px] lg:w-[1400px] lg:h-[1400px] bg-indigo-500/20 rounded-full blur-3xl animate-pulse"></div>
             </div>
 
-            <!-- Frase 2: INDIGO -->
-            <div class="absolute top-[40%] w-full animate-[scroll-left_22s_linear_infinite]">
-                <span class="block text-[10vw] sm:text-[7vw] md:text-[6vw] font-bold uppercase tracking-[0.2em] text-indigo-400/25 text-center whitespace-nowrap"
-                      style="text-shadow: 0 0 60px rgba(79,70,229,0.2), 0 0 120px rgba(79,70,229,0.1);">
-                    Amigos por siempre
-                </span>
-            </div>
-
-            <!-- Frase 3: BLANCA -->
-            <div class="absolute top-[65%] w-full animate-[scroll-right-slow_30s_linear_infinite]">
-                <span class="block text-[7vw] sm:text-[5vw] md:text-[4vw] font-bold uppercase tracking-[0.3em] text-white/15 text-center whitespace-nowrap"
-                      style="text-shadow: 0 0 50px rgba(255,255,255,0.08);">
-                    Una generación de fuego
-                </span>
-            </div>
-
-            <!-- Frase 4: PURPURA -->
-            <div class="absolute top-[85%] w-full animate-[scroll-left-slow_28s_linear_infinite]">
-                <span class="block text-[6vw] sm:text-[4vw] md:text-[3.5vw] font-bold uppercase tracking-[0.25em] text-purple-400/20 text-center whitespace-nowrap"
-                      style="text-shadow: 0 0 30px rgba(124,58,237,0.12);">
-                    Casa de Oración · Jóvenes con propósito
-                </span>
-            </div>
-
-            <!-- Frase 5: BLANCA -->
-            <div class="absolute top-[53%] w-full animate-[scroll-right-medium_15s_linear_infinite]">
-                <span class="block text-[5vw] sm:text-[3.5vw] md:text-[3vw] font-bold uppercase tracking-[0.35em] text-white/12 text-center whitespace-nowrap"
-                      style="text-shadow: 0 0 30px rgba(255,255,255,0.06);">
-                     EJL 
-                </span>
-            </div>
-        </div>
-
-        <!-- ===== INDICADOR DE SCROLL ===== -->
-        <div class="absolute bottom-20 left-0 right-0 text-center z-20 animate-bounce">
-            <p class="text-white/20 text-xs tracking-[0.2em] uppercase font-light mb-2">Desliza o toca el logo</p>
-            <svg class="w-6 h-6 mx-auto text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-        </div>
-
-        <!-- ===== LOGO 3D ===== -->
-        <div class="relative z-20 w-full max-w-none px-0 pointer-events-none">
-            <video 
-                autoplay 
-                muted 
-                loop 
-                playsinline
-                class="w-full h-auto max-h-[100vh] object-contain scale-125 drop-shadow-[0_0_200px_rgba(79,70,229,0.5)]"
-                style="background: transparent;"
-            >
-                <source src="./IMAGES/ejl_logo.mov" type="video/mp4">
-                Tu navegador no soporta videos.
-            </video>
-        </div>
-
-        <!-- ===== TEXTO INFERIOR ===== -->
-        <div class="absolute bottom-10 left-0 right-0 text-center z-20 pointer-events-none">
-            <p class="text-white/15 text-xs sm:text-sm tracking-[0.3em] uppercase font-light drop-shadow-lg">
-                Ejército Juvenil Líbano · Amigos por siempre
-            </p>
-            <div class="w-12 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mx-auto mt-3"></div>
-        </div>
-    </section>
-
-    <!-- ========== HERO ORIGINAL CON DIFUMINADO SUPERIOR ========== -->
-    <section id="heroSection" class="relative min-h-screen flex items-center bg-cover bg-center bg-no-repeat"
-         style="background-image: url('./IMAGES/foto14.jpg');">
-        <div class="absolute inset-0 bg-black/30 z-0"></div>
-        
-        <!-- ===== DIFUMINADO SUPERIOR (solo para transición) ===== -->
-        <div class="absolute top-0 left-0 right-0 h-48 z-10 bg-gradient-to-b from-black/90 via-black/40 to-transparent"></div>
-        <div class="absolute top-0 left-0 right-0 h-24 z-10 bg-gradient-to-b from-black/70 via-black/20 to-transparent"></div>
-        
-        <!-- ===== DIFUMINADO INFERIOR (sutil, como estaba) ===== -->
-        <div class="absolute bottom-0 left-0 right-0 h-32 z-10 bg-gradient-to-t from-gray-900 via-gray-900/30 to-transparent"></div>
-
-        <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 text-center text-white">
-            <h1 class="text-3xl sm:text-4xl md:text-7xl font-extrabold tracking-tight mb-4 leading-tight drop-shadow-lg">
-                Ejército Juvenil Libano
-            </h1>
-            <p class="text-lg sm:text-xl md:text-2xl text-indigo-100 font-light mb-2 drop-shadow">Amigos por siempre</p>
-            <p class="text-sm sm:text-base md:text-lg text-gray-200 max-w-2xl mx-auto mt-4 px-2 sm:px-0 drop-shadow">
-                Comunidad de jóvenes cristianos que buscan encender su generacion con el poder del Espiritu Santo.
-            </p>
-            <div class="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
-                <a href="involucrate.html" class="btn-primary text-white font-semibold py-3 px-5 sm:px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 text-center text-sm sm:text-base">
-                    Quiero unirme →
-                </a>
-                <a href="#informacion" class="bg-white/10 backdrop-blur-sm border border-white/30 text-white font-semibold py-3 px-5 sm:px-8 rounded-full hover:bg-white/20 transition text-center text-sm sm:text-base">
-                    Conocer más
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== SECCIÓN VIDEO DE BIENVENIDA ========== -->
-    <section class="relative py-16 sm:py-20 md:py-24 bg-gray-900 overflow-hidden">
-        <!-- Efecto de luz ambiental -->
-        <div class="absolute inset-0 pointer-events-none">
-            <div class="absolute top-0 right-0 w-80 h-80 sm:w-96 sm:h-96 bg-indigo-600/10 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-0 left-0 w-80 h-80 sm:w-96 sm:h-96 bg-purple-600/10 rounded-full blur-3xl"></div>
-        </div>
-
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col lg:flex-row items-center gap-8 sm:gap-10 md:gap-12 lg:gap-16">
-                
-                <!-- ===== COLUMNA IZQUIERDA: TEXTO ===== -->
-                <div class="w-full lg:w-1/2 text-center lg:text-left">
-                    <!-- Badge -->
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/20 border border-indigo-500/20 text-indigo-300 text-xs font-medium tracking-wider uppercase mb-4">
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-                        Te damos la bienvenida
-                    </div>
-
-                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-3 leading-tight tracking-tight">
-                        Este es tu <br class="hidden sm:block">
-                        <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">lugar</span>
-                    </h2>
-
-                    <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 mt-4 rounded-full"></div>
-
-                    <p class="text-gray-300 text-base sm:text-lg mt-4 leading-relaxed max-w-lg lg:max-w-none">
-                        Un mensaje para empezar tu camino en EJL.
-                        <span class="text-indigo-300 font-medium">Una palabra que nace del corazón</span> para todos los que llegan por primera vez.
-                    </p>
-
-                    <p class="text-gray-400 text-sm sm:text-base mt-3 leading-relaxed max-w-lg lg:max-w-none">
-                        No importa cómo llegaste aquí. Lo que importa es que <span class="text-white/80">ahora eres parte de esta familia.</span>
-                    </p>
-
-                    <!-- Frase destacada -->
-                    <div class="mt-6 p-4 sm:p-5 bg-white/5 rounded-2xl border border-white/10 max-w-lg lg:max-w-none">
-                        <p class="text-indigo-300 text-sm sm:text-base italic leading-relaxed">
-                            "No importa cómo llegaste, aquí tienes una familia que te espera con los brazos abiertos."
-                        </p>
-                        <p class="text-gray-500 text-xs mt-2">— Ejército Juvenil Líbano</p>
-                    </div>
+            <!-- FRASES GIGANTES DETRÁS DEL LOGO -->
+            <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+                <div class="absolute top-[15%] w-full animate-[scroll-right_20s_linear_infinite]">
+                    <span class="block frase-movil text-[5vw] sm:text-[6vw] md:text-[5vw] font-bold uppercase tracking-[0.15em] text-white/20 text-center whitespace-nowrap"
+                          style="text-shadow: 0 0 60px rgba(255,255,255,0.1), 0 0 120px rgba(255,255,255,0.05);">
+                        Ejército Juvenil Líbano
+                    </span>
                 </div>
+                <div class="absolute top-[40%] w-full animate-[scroll-left_22s_linear_infinite]">
+                    <span class="block frase-movil text-[7vw] sm:text-[8vw] md:text-[6vw] font-bold uppercase tracking-[0.2em] text-indigo-400/25 text-center whitespace-nowrap"
+                          style="text-shadow: 0 0 60px rgba(79,70,229,0.2), 0 0 120px rgba(79,70,229,0.1);">
+                        Amigos por siempre
+                    </span>
+                </div>
+                <div class="absolute top-[65%] w-full animate-[scroll-right-slow_30s_linear_infinite]">
+                    <span class="block frase-movil text-[4vw] sm:text-[5vw] md:text-[4vw] font-bold uppercase tracking-[0.3em] text-white/15 text-center whitespace-nowrap"
+                          style="text-shadow: 0 0 50px rgba(255,255,255,0.08);">
+                        Una generación de fuego
+                    </span>
+                </div>
+                <div class="absolute top-[53%] w-full animate-[scroll-right-medium_15s_linear_infinite]">
+                    <span class="block frase-movil text-[3vw] sm:text-[4vw] md:text-[3vw] font-bold uppercase tracking-[0.35em] text-white/12 text-center whitespace-nowrap"
+                          style="text-shadow: 0 0 30px rgba(255,255,255,0.06);">
+                         EJL 
+                    </span>
+                </div>
+            </div>
 
-                <!-- ===== COLUMNA DERECHA: VIDEO ===== -->
-                <div class="w-full lg:w-1/2 flex justify-center lg:justify-end">
-                    <div class="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-sm xl:max-w-md">
-                        <!-- Glow detrás del video -->
-                        <div class="absolute -inset-4 bg-gradient-to-r from-indigo-600/20 to-purple-600/20 rounded-3xl blur-2xl"></div>
-                        
-                        <!-- Contenedor del video -->
-                        <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/30 backdrop-blur-sm">
-                            <div class="relative w-full" style="aspect-ratio: 9/16;">
-                                <video 
-                                    class="absolute inset-0 w-full h-full object-contain cursor-pointer bg-black"
-                                    controls
-                                    playsinline
-                                    poster="./IMAGES/video1-poster.jpg"
-                                >
-                                    <source src="./IMAGES/ejl_video1.mov" type="video/mp4">
-                                    Tu navegador no soporta videos.
-                                </video>
+            <div class="absolute bottom-20 left-0 right-0 text-center z-20 animate-bounce">
+                <p class="text-white/20 text-[8px] sm:text-xs tracking-[0.2em] uppercase font-light mb-2">Desliza o toca el logo</p>
+                <svg class="w-5 h-5 sm:w-6 sm:h-6 mx-auto text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
+
+            <!-- VIDEO DEL LOGO (más pequeño en móvil) -->
+            <div class="relative z-20 w-full max-w-none px-0 pointer-events-none">
+                <video 
+                    autoplay 
+                    muted 
+                    loop 
+                    playsinline
+                    preload="metadata"
+                    class="w-full h-auto max-h-[65vh] sm:max-h-[80vh] md:max-h-[100vh] object-contain scale-100 sm:scale-110 md:scale-125 drop-shadow-[0_0_80px_rgba(79,70,229,0.2)] sm:drop-shadow-[0_0_150px_rgba(79,70,229,0.4)] md:drop-shadow-[0_0_200px_rgba(79,70,229,0.5)]"
+                    style="background: transparent;"
+                >
+                    <source src="./IMAGES/ejl_logo.MOV" type="video/mp4">
+                    Tu navegador no soporta videos.
+                </video>
+            </div>
+
+            <div class="absolute bottom-10 left-0 right-0 text-center z-20 pointer-events-none">
+                <p class="text-white/15 text-[8px] sm:text-[10px] md:text-xs lg:text-sm tracking-[0.3em] uppercase font-light drop-shadow-lg">
+                    Ejército Juvenil Líbano · Amigos por siempre
+                </p>
+                <div class="w-10 sm:w-12 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mx-auto mt-2 sm:mt-3"></div>
+            </div>
+        </section>
+
+        <!-- ========== HERO ORIGINAL ========== -->
+        <section id="heroSection" class="seccion-flexible relative min-h-screen flex items-center bg-cover bg-center bg-no-repeat"
+                 style="background-image: url('./IMAGES/foto14.jpg'); background-position: center; background-size: cover;">
+            <div class="absolute inset-0 bg-black/30 z-0"></div>
+            <div class="absolute top-0 left-0 right-0 h-24 sm:h-32 md:h-48 z-10 bg-gradient-to-b from-black/90 via-black/40 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 h-20 sm:h-28 md:h-32 z-10 bg-gradient-to-t from-gray-900 via-gray-900/30 to-transparent"></div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-5 md:px-6 lg:px-8 text-center text-white py-8">
+                <h1 class="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-2 sm:mb-4 leading-tight drop-shadow-lg">
+                    Ejército Juvenil Libano
+                </h1>
+                <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-indigo-100 font-light drop-shadow">Amigos por siempre</p>
+                <p class="text-sm sm:text-base md:text-lg text-gray-200 max-w-2xl mx-auto mt-3 sm:mt-4 px-2 drop-shadow">
+                    Comunidad de jóvenes cristianos que buscan encender su generacion con el poder del Espiritu Santo.
+                </p>
+                <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
+                    <a href="involucrate.html" class="btn-primary text-white font-semibold py-2.5 sm:py-3 px-5 sm:px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 text-center text-sm sm:text-base">
+                        Quiero unirme →
+                    </a>
+                    <a href="#informacion" class="bg-white/10 backdrop-blur-sm border border-white/30 text-white font-semibold py-2.5 sm:py-3 px-5 sm:px-8 rounded-full hover:bg-white/20 transition text-center text-sm sm:text-base">
+                        Conocer más
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SECCIÓN VIDEO DE BIENVENIDA ========== -->
+        <section class="seccion-flexible relative py-12 sm:py-16 md:py-20 lg:py-24 bg-gray-900 overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-0 right-0 w-48 sm:w-64 md:w-80 h-48 sm:h-64 md:h-80 bg-indigo-600/10 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 left-0 w-48 sm:w-64 md:w-80 h-48 sm:h-64 md:h-80 bg-purple-600/10 rounded-full blur-3xl"></div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-5 md:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row items-center gap-6 sm:gap-8 md:gap-10 lg:gap-16">
+                    
+                    <div class="w-full lg:w-1/2 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-indigo-500/20 border border-indigo-500/20 text-indigo-300 text-[10px] sm:text-xs font-medium tracking-wider uppercase mb-3 sm:mb-4">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                            Te damos la bienvenida
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-3 leading-tight tracking-tight">
+                            Este es tu <br class="hidden sm:block">
+                            <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">lugar</span>
+                        </h2>
+                        <div class="w-10 sm:w-12 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 mt-3 sm:mt-4 rounded-full"></div>
+                        <p class="text-gray-300 text-sm sm:text-base lg:text-lg mt-3 sm:mt-4 leading-relaxed max-w-lg lg:max-w-none">
+                            Un mensaje para empezar tu camino en EJL.
+                            <span class="text-indigo-300 font-medium">Una palabra que nace del corazón</span> para todos los que llegan por primera vez.
+                        </p>
+                        <p class="text-gray-400 text-xs sm:text-sm lg:text-base mt-2 sm:mt-3 leading-relaxed max-w-lg lg:max-w-none">
+                            No importa cómo llegaste aquí. Lo que importa es que <span class="text-white/80">ahora eres parte de esta familia.</span>
+                        </p>
+                        <div class="mt-4 sm:mt-6 p-3 sm:p-4 md:p-5 bg-white/5 rounded-2xl border border-white/10 max-w-lg lg:max-w-none">
+                            <p class="text-indigo-300 text-sm sm:text-base italic leading-relaxed">
+                                "No importa cómo llegaste, aquí tienes una familia que te espera con los brazos abiertos."
+                            </p>
+                            <p class="text-gray-500 text-[10px] sm:text-xs mt-1 sm:mt-2">— Ejército Juvenil Líbano</p>
+                        </div>
+                    </div>
+
+                    <div class="w-full lg:w-1/2 flex justify-center lg:justify-end">
+                        <div class="relative w-full max-w-[250px] sm:max-w-xs md:max-w-sm lg:max-w-sm xl:max-w-md">
+                            <div class="absolute -inset-3 sm:-inset-4 bg-gradient-to-r from-indigo-600/20 to-purple-600/20 rounded-3xl blur-2xl"></div>
+                            <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/30 backdrop-blur-sm">
+                                <div class="relative w-full" style="aspect-ratio: 9/16;">
+                                    <video 
+                                        class="absolute inset-0 w-full h-full object-contain cursor-pointer bg-black"
+                                        controls
+                                        playsinline
+                                        preload="metadata"
+                                        poster="./IMAGES/video1-poster.jpg"
+                                    >
+                                        <source src="./IMAGES/ejl_video1.mov" type="video/mp4">
+                                        Tu navegador no soporta videos.
+                                    </video>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-
-    
-<!-- ========== INFORMACION DEL GRUPO ========== -->
-<section id="informacion" class="relative py-12 sm:py-16 md:py-20 lg:py-32 bg-gray-900 overflow-hidden">
-    
-    <!-- Efecto de fondo con gradientes y blur -->
-    <div class="absolute inset-0 pointer-events-none">
-        <div class="absolute top-0 left-0 w-48 sm:w-96 h-48 sm:h-96 bg-indigo-600/20 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 right-0 w-48 sm:w-96 h-48 sm:h-96 bg-purple-600/20 rounded-full blur-3xl"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] sm:w-[500px] h-[250px] sm:h-[500px] bg-indigo-500/5 rounded-full blur-3xl"></div>
-    </div>
-
-    <div class="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        
-        <!-- Encabezado -->
-        <div class="text-center mb-10 sm:mb-12 md:mb-16 lg:mb-20">
-            <span class="text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-indigo-400">Identidad</span>
-            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-3 tracking-tight">
-                Nuestra esencia
-            </h2>
-            <div class="w-16 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mt-5 sm:mt-6 rounded-full"></div>
-            <p class="text-gray-400 mt-5 sm:mt-6 max-w-2xl mx-auto text-sm sm:text-base lg:text-lg px-4">
-                Una generacion apasionada por Jesus, comprometida con Su presencia y llamada a transformar vidas para Su gloria.
-            </p>
-        </div>
-
-        <!-- Grid de Cards - En móvil: 1 columna, en computadora: 4 columnas -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-8">
-
-            <!-- MISION -->
-            <div class="group relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 sm:p-6 transition-all duration-500 hover:border-indigo-500/50 hover:bg-white/10">
-                <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                
-                <div class="relative z-10">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 group-hover:bg-indigo-500/30 transition-all duration-300">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">Mision</h3>
-                    <p class="text-gray-400 mt-2 leading-relaxed text-sm sm:text-base group-hover:text-gray-300 transition-colors duration-300">
-                        Ser un grupo de jóvenes apasionados y dedicados a la búsqueda incesante de la presencia de Dios. Nuestra misión es preservar y transmitir el legado espiritual de nuestras raíces, impactando nuestra generación con un testimonio valiente, siendo luz y guía para llevar a más jóvenes a los pies de Cristo.
-                    </p>
-                </div>
-            </div>
-
-            <!-- VISION -->
-            <div class="group relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 sm:p-6 transition-all duration-500 hover:border-indigo-500/50 hover:bg-white/10">
-                <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                
-                <div class="relative z-10">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 group-hover:bg-indigo-500/30 transition-all duration-300">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">Vision</h3>
-                    <p class="text-gray-400 mt-2 leading-relaxed text-sm sm:text-base group-hover:text-gray-300 transition-colors duration-300">
-                        Encender el fuego del Espiritu Santo en nuestra generacion, sirviendo, evangelizando y llevando a mas jovenes a rendirse ante el amor de Jesus.
-                    </p>
-                </div>
-            </div>
-
-            <!-- VALORES -->
-            <div class="group relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 sm:p-6 transition-all duration-500 hover:border-indigo-500/50 hover:bg-white/10">
-                <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                
-                <div class="relative z-10">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 group-hover:bg-indigo-500/30 transition-all duration-300">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">Valores</h3>
-                    <div class="mt-3 flex flex-wrap gap-2">
-                        <span class="text-xs font-medium px-2 py-1 rounded-full bg-white/10 text-gray-300 border border-white/5">Disciplina</span>
-                        <span class="text-xs font-medium px-2 py-1 rounded-full bg-white/10 text-gray-300 border border-white/5">Pasion</span>
-                        <span class="text-xs font-medium px-2 py-1 rounded-full bg-white/10 text-gray-300 border border-white/5">Pureza</span>
-                        <span class="text-xs font-medium px-2 py-1 rounded-full bg-white/10 text-gray-300 border border-white/5">Servicio</span>
-                        <span class="text-xs font-medium px-2 py-1 rounded-full bg-white/10 text-gray-300 border border-white/5">Integridad</span>
-                        <span class="text-xs font-medium px-2 py-1 rounded-full bg-white/10 text-gray-300 border border-white/5">Fe</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- REUNIONES -->
-            <div class="group relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 sm:p-6 transition-all duration-500 hover:border-indigo-500/50 hover:bg-white/10">
-                <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                
-                <div class="relative z-10">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 group-hover:bg-indigo-500/30 transition-all duration-300">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">Reuniones</h3>
-                    <div class="mt-3 space-y-2">
-                        <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
-                            <span class="text-indigo-400 font-semibold text-sm">Domingos:</span>
-                            <span class="text-gray-400 text-sm">10:00 AM · Todos a la Mesa</span>
-                        </div>
-                        <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
-                            <span class="text-indigo-400 font-semibold text-sm">Miercoles:</span>
-                            <span class="text-gray-400 text-sm">6:15 PM · Reunion General</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- LEMA con diseño premium -->
-        <div class="mt-10 sm:mt-12 md:mt-16 lg:mt-20 relative">
-            <div class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-700 rounded-3xl blur-2xl opacity-30"></div>
-            <div class="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-14 text-center transition-all duration-300 hover:border-indigo-500/30">
-                <div class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-400 text-xs sm:text-sm font-medium mb-3 sm:mb-4 md:mb-6 border border-indigo-500/20">
-                    <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    Nuestro Lema
-                </div>
-                <h3 class="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white tracking-tight leading-tight">
-                    "Ayer, hoy y hasta la venida del Señor,<br>
-                    Dios nos capitaneara"
-                </h3>
-                <div class="mt-5 sm:mt-6 md:mt-8 flex justify-center gap-2">
-                    <div class="w-12 h-0.5 bg-gradient-to-r from-transparent via-indigo-400 to-transparent rounded-full"></div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<!-- ========== SECCION PROXIMOS EVENTOS ========== -->
-<section class="relative py-12 sm:py-16 md:py-20 bg-cover bg-center bg-no-repeat" style="background-image: url('./IMAGES/foto42.jpg');">
-    <!-- Overlay mas sutil para que se vea la imagen -->
-    <div class="absolute inset-0 bg-black/40"></div>
-    
-    <!-- Gradiente suave en los bordes para dar profundidad sin tapar la imagen -->
-    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30"></div>
-    
-    <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        
-        <div class="text-center mb-8 sm:mb-10 md:mb-12">
-            <span class="text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-indigo-300">Calendario</span>
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mt-2">Proximos eventos</h2>
-            <div class="w-16 h-0.5 bg-gradient-to-r from-indigo-400 to-purple-400 mx-auto mt-3 sm:mt-4 rounded-full"></div>
-            <p class="text-gray-200 mt-3 sm:mt-4 max-w-2xl mx-auto text-sm sm:text-base">
-                No te pierdas nuestras actividades. Vive encuentros transformadores junto a toda la familia EJL.
-            </p>
-        </div>
-
-        <!-- Grid eventos: en móvil 1 columna, tablet 2, computadora 3 -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
+        <!-- ========== INFORMACION DEL GRUPO ========== -->
+        <section id="informacion" class="seccion-flexible relative py-12 sm:py-16 md:py-20 lg:py-32 bg-gray-900 overflow-hidden">
             
-            <!-- Evento 1 -->
-            <div class="group bg-black/30 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 transition-all duration-500 hover:border-indigo-400/50 hover:bg-black/40">
-                <div class="h-40 sm:h-48 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center">
-                    <svg class="w-12 h-12 sm:w-16 sm:h-16 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                    </svg>
-                </div>
-                <div class="p-5 sm:p-6">
-                    <div class="text-sm font-semibold text-indigo-300">Proximamente</div>
-                    <h3 class="text-lg sm:text-xl font-bold text-white mt-1">Nombre del evento</h3>
-                    <p class="text-gray-200 mt-2 text-sm leading-relaxed">
-                        Descripcion breve del evento. Una experiencia unica para crecer en fe y comunidad.
-                    </p>
-                    <a href="#" class="inline-flex items-center mt-4 text-indigo-300 font-medium text-sm group-hover:text-indigo-200 transition">
-                        Saber mas 
-                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </a>
-                </div>
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-0 left-0 w-32 sm:w-48 md:w-96 h-32 sm:h-48 md:h-96 bg-indigo-600/20 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 right-0 w-32 sm:w-48 md:w-96 h-32 sm:h-48 md:h-96 bg-purple-600/20 rounded-full blur-3xl"></div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150px] sm:w-[250px] md:w-[500px] h-[150px] sm:h-[250px] md:h-[500px] bg-indigo-500/5 rounded-full blur-3xl"></div>
             </div>
 
-            <!-- Evento 2 -->
-            <div class="group bg-black/30 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 transition-all duration-500 hover:border-indigo-400/50 hover:bg-black/40">
-                <div class="h-40 sm:h-48 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center">
-                    <svg class="w-12 h-12 sm:w-16 sm:h-16 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 5v2m0 4v2m0 4v2M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"></path>
-                    </svg>
-                </div>
-                <div class="p-5 sm:p-6">
-                    <div class="text-sm font-semibold text-indigo-300">Proximamente</div>
-                    <h3 class="text-lg sm:text-xl font-bold text-white mt-1">Nombre del evento</h3>
-                    <p class="text-gray-200 mt-2 text-sm leading-relaxed">
-                        Descripcion breve del evento. Una experiencia unica para crecer en fe y comunidad.
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-5 md:px-6 lg:px-8">
+                
+                <div class="text-center mb-10 sm:mb-12 md:mb-16 lg:mb-20">
+                    <span class="text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.3em] font-semibold text-indigo-400">Identidad</span>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-2 sm:mt-3 tracking-tight">
+                        Nuestra esencia
+                    </h2>
+                    <div class="w-16 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mt-4 sm:mt-5 md:mt-6 rounded-full"></div>
+                    <p class="text-gray-400 mt-4 sm:mt-5 md:mt-6 max-w-2xl mx-auto text-sm sm:text-base lg:text-lg px-4">
+                        Una generacion apasionada por Jesus, comprometida con Su presencia y llamada a transformar vidas para Su gloria.
                     </p>
-                    <a href="#" class="inline-flex items-center mt-4 text-indigo-300 font-medium text-sm group-hover:text-indigo-200 transition">
-                        Saber mas 
-                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </a>
                 </div>
-            </div>
 
-            <!-- Evento 3 -->
-            <div class="group bg-black/30 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 transition-all duration-500 hover:border-indigo-400/50 hover:bg-black/40">
-                <div class="h-40 sm:h-48 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center">
-                    <svg class="w-12 h-12 sm:w-16 sm:h-16 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                </div>
-                <div class="p-5 sm:p-6">
-                    <div class="text-sm font-semibold text-indigo-300">Proximamente</div>
-                    <h3 class="text-lg sm:text-xl font-bold text-white mt-1">Nombre del evento</h3>
-                    <p class="text-gray-200 mt-2 text-sm leading-relaxed">
-                        Descripcion breve del evento. Una experiencia unica para crecer en fe y comunidad.
-                    </p>
-                    <a href="#" class="inline-flex items-center mt-4 text-indigo-300 font-medium text-sm group-hover:text-indigo-200 transition">
-                        Saber mas 
-                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="text-center mt-8 sm:mt-10 md:mt-12">
-            <a href="eventos.html" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 sm:py-3 px-5 sm:px-8 rounded-full transition shadow-lg hover:shadow-indigo-500/25 text-sm sm:text-base">
-                Ver todos los eventos
-                <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                </svg>
-            </a>
-        </div>
-    </div>
-</section>
-
-    <!-- ========== FOOTER ========== -->
-    <footer class="bg-gray-900 border-t border-gray-800 pt-12 sm:pt-16 pb-6 sm:pb-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
-                <!-- Columna 1 - Logo y descripción -->
-                <div class="text-center sm:text-left">
-                    <div class="flex items-center justify-center sm:justify-start space-x-2">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden flex-shrink-0">
-                            <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+                    <!-- Cards -->
+                    <div class="group relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 sm:p-6 transition-all duration-500 hover:border-indigo-500/50 hover:bg-white/10">
+                        <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <div class="relative z-10">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 group-hover:bg-indigo-500/30 transition-all duration-300">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">Mision</h3>
+                            <p class="text-gray-400 mt-2 leading-relaxed text-sm sm:text-base group-hover:text-gray-300 transition-colors duration-300">
+                                Ser un grupo de jóvenes apasionados y dedicados a la búsqueda incesante de la presencia de Dios...
+                            </p>
                         </div>
-                        <span class="text-xl font-bold text-white">EJL<span class="text-indigo-400">.</span></span>
                     </div>
-                    <p class="mt-3 text-sm text-gray-400">Ejército Juvenil Libano<br>Amigos por siempre</p>
-                </div>
-
-                <!-- Columna 2 - Enlaces -->
-                <div class="text-center sm:text-left">
-                    <h4 class="text-white font-semibold mb-3">Enlaces</h4>
-                    <ul class="space-y-1.5 text-sm">
-                        <li><a href="index.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Inicio</a></li>
-                        <li><a href="nosotros.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Nosotros</a></li>
-                        <li><a href="ubicacion.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Ubicación</a></li>
-                        <li><a href="eventos.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Eventos</a></li>
-                        <li><a href="galeria.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Galería</a></li>
-                        <li><a href="involucrate.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Involúcrate</a></li>
-                    </ul>
-                </div>
-
-                <!-- Columna 3 - Contacto -->
-                <div class="text-center sm:text-left">
-                    <h4 class="text-white font-semibold mb-3">Contacto</h4>
-                    <ul class="space-y-1.5 text-sm text-gray-400">
-                        <li>
-                            <a href="mailto:ejl.casadeoracion@gmail.com" class="hover:text-indigo-400 transition duration-300">
-                                ejl.casadeoracion@gmail.com
-                            </a>
-                        </li>
-                        <li>
-                            <a href="tel:+527712077884" class="hover:text-indigo-400 transition duration-300">
-                                771 207 7884
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="mt-3 flex gap-3 justify-center sm:justify-start">
-                        <!-- Instagram -->
-                        <a href="https://www.instagram.com/ejl.oficialcdo" target="_blank" class="text-gray-400 hover:text-pink-500 transition duration-300" aria-label="Instagram">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                            </svg>
-                        </a>
-                        <!-- Facebook -->
-                        <a href="https://www.facebook.com/ejl.axs" target="_blank" class="text-gray-400 hover:text-blue-500 transition duration-300" aria-label="Facebook">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                        </a>
+                    <div class="group relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 sm:p-6 transition-all duration-500 hover:border-indigo-500/50 hover:bg-white/10">
+                        <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <div class="relative z-10">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 group-hover:bg-indigo-500/30 transition-all duration-300">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">Vision</h3>
+                            <p class="text-gray-400 mt-2 leading-relaxed text-sm sm:text-base group-hover:text-gray-300 transition-colors duration-300">
+                                Encender el fuego del Espiritu Santo en nuestra generacion, sirviendo, evangelizando...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="group relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 sm:p-6 transition-all duration-500 hover:border-indigo-500/50 hover:bg-white/10">
+                        <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <div class="relative z-10">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 group-hover:bg-indigo-500/30 transition-all duration-300">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">Valores</h3>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <span class="text-xs font-medium px-2 py-1 rounded-full bg-white/10 text-gray-300 border border-white/5">Disciplina</span>
+                                <span class="text-xs font-medium px-2 py-1 rounded-full bg-white/10 text-gray-300 border border-white/5">Pasion</span>
+                                <span class="text-xs font-medium px-2 py-1 rounded-full bg-white/10 text-gray-300 border border-white/5">Pureza</span>
+                                <span class="text-xs font-medium px-2 py-1 rounded-full bg-white/10 text-gray-300 border border-white/5">Servicio</span>
+                                <span class="text-xs font-medium px-2 py-1 rounded-full bg-white/10 text-gray-300 border border-white/5">Integridad</span>
+                                <span class="text-xs font-medium px-2 py-1 rounded-full bg-white/10 text-gray-300 border border-white/5">Fe</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 sm:p-6 transition-all duration-500 hover:border-indigo-500/50 hover:bg-white/10">
+                        <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <div class="relative z-10">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 group-hover:bg-indigo-500/30 transition-all duration-300">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">Reuniones</h3>
+                            <div class="mt-3 space-y-2">
+                                <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
+                                    <span class="text-indigo-400 font-semibold text-sm">Domingos:</span>
+                                    <span class="text-gray-400 text-sm">10:00 AM · Todos a la Mesa</span>
+                                </div>
+                                <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
+                                    <span class="text-indigo-400 font-semibold text-sm">Miercoles:</span>
+                                    <span class="text-gray-400 text-sm">6:15 PM · Reunion General</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Columna 4 - Dirección -->
-                <div class="text-center sm:text-left">
-                    <h4 class="text-white font-semibold mb-3">Dirección</h4>
-                    <p class="text-sm text-gray-400 leading-relaxed">
-                        Calle Ángela Peralta No. 206<br>
-                        Colonia Del Castillo<br>
-                        Pachuca, Hidalgo
-                    </p>
+                <!-- LEMA -->
+                <div class="mt-10 sm:mt-12 md:mt-16 lg:mt-20 relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-700 rounded-3xl blur-2xl opacity-30"></div>
+                    <div class="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-14 text-center transition-all duration-300 hover:border-indigo-500/30">
+                        <div class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-400 text-xs sm:text-sm font-medium mb-3 sm:mb-4 md:mb-6 border border-indigo-500/20">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Nuestro Lema
+                        </div>
+                        <h3 class="text-base sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white tracking-tight leading-tight">
+                            "Ayer, hoy y hasta la venida del Señor,<br>
+                            Dios nos capitaneara"
+                        </h3>
+                        <div class="mt-5 sm:mt-6 md:mt-8 flex justify-center gap-2">
+                            <div class="w-12 h-0.5 bg-gradient-to-r from-transparent via-indigo-400 to-transparent rounded-full"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Línea divisoria y créditos -->
-            <div class="border-t border-gray-800 mt-8 sm:mt-10 pt-6 sm:pt-8">
-                <div class="flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
-                    <p class="text-xs sm:text-sm text-gray-500">
-                        © 2025 Ejército Juvenil Libano. Todos los derechos reservados.
-                    </p>
-                    <p class="text-xs text-gray-400">
-                        Diseñado y desarrollado por 
-                        <span class="text-indigo-400 font-semibold hover:text-indigo-300 transition duration-300">Levi Jafet y Abigail Espinosa</span>
+        <!-- ========== SECCION PROXIMOS EVENTOS ========== -->
+        <section class="seccion-flexible relative py-12 sm:py-16 md:py-20 bg-cover bg-center bg-no-repeat" style="background-image: url('./IMAGES/foto42.jpg'); background-position: center; background-size: cover;">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30"></div>
+            
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-5 md:px-6 lg:px-8">
+                
+                <div class="text-center mb-8 sm:mb-10 md:mb-12">
+                    <span class="text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.3em] font-semibold text-indigo-300">Calendario</span>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mt-2">Proximos eventos</h2>
+                    <div class="w-16 h-0.5 bg-gradient-to-r from-indigo-400 to-purple-400 mx-auto mt-3 sm:mt-4 rounded-full"></div>
+                    <p class="text-gray-200 mt-3 sm:mt-4 max-w-2xl mx-auto text-sm sm:text-base">
+                        No te pierdas nuestras actividades. Vive encuentros transformadores junto a toda la familia EJL.
                     </p>
                 </div>
-            </div>
-        </div>
-    </footer>
-    
 
-    <!-- JS para menú móvil y navbar scroll -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+                    <!-- Evento 1 -->
+                    <div class="group bg-black/30 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 transition-all duration-500 hover:border-indigo-400/50 hover:bg-black/40">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center">
+                            <svg class="w-12 h-12 sm:w-16 sm:h-16 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="p-5 sm:p-6">
+                            <div class="text-sm font-semibold text-indigo-300">Proximamente</div>
+                            <h3 class="text-lg sm:text-xl font-bold text-white mt-1">Nombre del evento</h3>
+                            <p class="text-gray-200 mt-2 text-sm leading-relaxed">
+                                Descripcion breve del evento. Una experiencia unica para crecer en fe y comunidad.
+                            </p>
+                            <a href="#" class="inline-flex items-center mt-4 text-indigo-300 font-medium text-sm group-hover:text-indigo-200 transition">
+                                Saber mas 
+                                <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Evento 2 -->
+                    <div class="group bg-black/30 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 transition-all duration-500 hover:border-indigo-400/50 hover:bg-black/40">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center">
+                            <svg class="w-12 h-12 sm:w-16 sm:h-16 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 5v2m0 4v2m0 4v2M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"></path>
+                            </svg>
+                        </div>
+                        <div class="p-5 sm:p-6">
+                            <div class="text-sm font-semibold text-indigo-300">Proximamente</div>
+                            <h3 class="text-lg sm:text-xl font-bold text-white mt-1">Nombre del evento</h3>
+                            <p class="text-gray-200 mt-2 text-sm leading-relaxed">
+                                Descripcion breve del evento. Una experiencia unica para crecer en fe y comunidad.
+                            </p>
+                            <a href="#" class="inline-flex items-center mt-4 text-indigo-300 font-medium text-sm group-hover:text-indigo-200 transition">
+                                Saber mas 
+                                <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Evento 3 -->
+                    <div class="group bg-black/30 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 transition-all duration-500 hover:border-indigo-400/50 hover:bg-black/40">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center">
+                            <svg class="w-12 h-12 sm:w-16 sm:h-16 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="p-5 sm:p-6">
+                            <div class="text-sm font-semibold text-indigo-300">Proximamente</div>
+                            <h3 class="text-lg sm:text-xl font-bold text-white mt-1">Nombre del evento</h3>
+                            <p class="text-gray-200 mt-2 text-sm leading-relaxed">
+                                Descripcion breve del evento. Una experiencia unica para crecer en fe y comunidad.
+                            </p>
+                            <a href="#" class="inline-flex items-center mt-4 text-indigo-300 font-medium text-sm group-hover:text-indigo-200 transition">
+                                Saber mas 
+                                <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-8 sm:mt-10 md:mt-12">
+                    <a href="eventos.html" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 sm:py-3 px-5 sm:px-8 rounded-full transition shadow-lg hover:shadow-indigo-500/25 text-sm sm:text-base">
+                        Ver todos los eventos
+                        <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== FOOTER ========== -->
+        <footer class="bg-gray-900 border-t border-gray-800 pt-10 sm:pt-12 md:pt-16 pb-6 sm:pb-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+                    <div class="text-center sm:text-left">
+                        <div class="flex items-center justify-center sm:justify-start space-x-2">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden flex-shrink-0">
+                                <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain" loading="lazy">
+                            </div>
+                            <span class="text-xl font-bold text-white">EJL<span class="text-indigo-400">.</span></span>
+                        </div>
+                        <p class="mt-3 text-sm text-gray-400">Ejército Juvenil Libano<br>Amigos por siempre</p>
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <h4 class="text-white font-semibold mb-3">Enlaces</h4>
+                        <ul class="space-y-1.5 text-sm">
+                            <li><a href="index.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Inicio</a></li>
+                            <li><a href="nosotros.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Nosotros</a></li>
+                            <li><a href="ubicacion.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Ubicación</a></li>
+                            <li><a href="eventos.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Eventos</a></li>
+                            <li><a href="galeria.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Galería</a></li>
+                            <li><a href="involucrate.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Involúcrate</a></li>
+                            <li><a href="merch.html" class="text-gray-400 hover:text-indigo-400 transition duration-300">Merch</a></li>
+                        </ul>
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <h4 class="text-white font-semibold mb-3">Contacto</h4>
+                        <ul class="space-y-1.5 text-sm text-gray-400">
+                            <li><a href="mailto:ejl.casadeoracion@gmail.com" class="hover:text-indigo-400 transition duration-300">ejl.casadeoracion@gmail.com</a></li>
+                            <li><a href="tel:+527712077884" class="hover:text-indigo-400 transition duration-300">771 207 7884</a></li>
+                        </ul>
+                        <div class="mt-3 flex gap-3 justify-center sm:justify-start">
+                            <a href="https://www.instagram.com/ejl.oficialcdo" target="_blank" class="text-gray-400 hover:text-pink-500 transition duration-300">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.facebook.com/ejl.axs" target="_blank" class="text-gray-400 hover:text-blue-500 transition duration-300">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <h4 class="text-white font-semibold mb-3">Dirección</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">
+                            Calle Ángela Peralta No. 206<br>
+                            Colonia Del Castillo<br>
+                            Pachuca, Hidalgo
+                        </p>
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 mt-8 sm:mt-10 pt-6 sm:pt-8">
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
+                        <p class="text-xs sm:text-sm text-gray-500">© 2025 Ejército Juvenil Libano. Todos los derechos reservados.</p>
+                        <p class="text-xs text-gray-400">Diseñado y desarrollado por <span class="text-indigo-400 font-semibold hover:text-indigo-300 transition duration-300">Levi Jafet y Abigail Espinosa</span></p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- SCRIPTS -->
     <script>
-        // Menu hamburguesa
         const menuBtn = document.getElementById('menuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         if (menuBtn && mobileMenu) {
@@ -689,12 +622,6 @@
             });
         }
 
-        // ELIMINADO: el efecto de scroll que cambiaba el navbar a blanco
-        // Ahora el navbar se mantiene siempre transparente/oscuro
-    </script>
-</body>
-    <script>
-        // ========== SCROLL SUAVE AL HERO ==========
         function scrollToHero() {
             const heroSection = document.getElementById('heroSection');
             if (heroSection) {
@@ -705,7 +632,6 @@
             }
         }
 
-        // También funciona con la tecla de espacio o cualquier clic
         document.addEventListener('keydown', (e) => {
             if (e.key === ' ' || e.key === 'Space') {
                 const logoSection = document.getElementById('logoSection');
@@ -716,4 +642,5 @@
             }
         });
     </script>
+</body>
 </html>
