@@ -130,8 +130,8 @@
             pointer-events: all;
         }
         .profile-pic {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid rgba(255,255,255,0.2);
@@ -188,111 +188,16 @@
         .glass-text-light {
             color: #6b7280;
         }
-
-        /* ===== MENÚ MÓVIL ===== */
-        .mobile-menu-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 40;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-        .mobile-menu-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .mobile-menu-panel {
-            position: fixed;
-            top: 0;
-            left: -280px;
-            width: 280px;
-            height: 100%;
-            background: white;
-            z-index: 50;
-            transition: all 0.3s ease;
-            padding: 20px;
-            overflow-y: auto;
-            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
-        }
-        .mobile-menu-panel.open {
-            left: 0;
-        }
-        .mobile-menu-panel .close-btn {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #6b7280;
-            cursor: pointer;
-        }
-        .mobile-menu-panel .menu-item {
-            display: block;
-            padding: 12px 0;
-            color: #1f2937;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 500;
-            border-bottom: 1px solid #f3f4f6;
-        }
-        .mobile-menu-panel .menu-item:last-child {
-            border-bottom: none;
-        }
-        .menu-hamburger {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 4px;
-        }
-
-        /* ===== RESPONSIVE: Ocultar elementos en móvil ===== */
-        @media (max-width: 768px) {
-            .desktop-only {
-                display: none !important;
-            }
-            .mobile-only {
-                display: block !important;
-            }
-        }
-        @media (min-width: 769px) {
-            .mobile-only {
-                display: none !important;
-            }
-            .desktop-only {
-                display: block !important;
-            }
-        }
     </style>
 </head>
 <body class="bg-[#f8f9fa]">
-
-    <!-- ===== MENÚ MÓVIL (fuera del flujo) ===== -->
-    <div class="mobile-menu-overlay" id="mobileOverlay" onclick="cerrarMenuMovil()"></div>
-    <div class="mobile-menu-panel" id="mobilePanel">
-        <button class="close-btn" onclick="cerrarMenuMovil()">✕</button>
-        <div class="mt-8">
-            <a href="index.html" class="menu-item">Inicio</a>
-            <a href="nosotros.html" class="menu-item">Nosotros</a>
-            <a href="ubicacion.html" class="menu-item">Ubicación</a>
-            <a href="eventos.html" class="menu-item">Eventos</a>
-            <a href="galeria.html" class="menu-item">Galería</a>
-            <a href="involucrate.html" class="menu-item">Involúcrate</a>
-            <a href="merch.html" class="menu-item text-indigo-600 font-bold">🛒 Merch</a>
-        </div>
-        <div class="mt-6 pt-4 border-t border-gray-200">
-            <p class="text-xs text-gray-400">EJL · Ejército Juvenil Líbano</p>
-        </div>
-    </div>
 
     <!-- ========== BANNER SUPERIOR ========== -->
     <div id="topBanner" class="relative w-full bg-[#0a0a0a] py-2 sm:py-2.5 md:py-3 overflow-hidden border-b border-white/5">
         <div class="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
             <div class="flex items-center justify-between">
                 <div class="flex-1 flex items-center justify-center sm:justify-start overflow-hidden">
-                    <div id="bannerText" class="text-white/70 text-[9px] sm:text-[11px] md:text-xs font-light tracking-wide whitespace-nowrap transition-all duration-700 ease-in-out">
+                    <div id="bannerText" class="text-white/70 text-[10px] sm:text-[11px] md:text-xs font-light tracking-wide whitespace-nowrap transition-all duration-700 ease-in-out">
                         <span class="text-indigo-400 font-medium">✦</span> Usa el código <span class="text-white font-medium">EJL15</span> en tu primera compra
                     </div>
                 </div>
@@ -308,63 +213,12 @@
         </div>
     </div>
 
-    <!-- ========== NAVBAR SIMPLE (sin el badge complejo) ========== -->
-    <nav class="sticky top-0 z-30 bg-white border-b border-gray-100 shadow-sm">
-        <div class="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-14 sm:h-16 md:h-20">
-                <!-- Logo (más pequeño en móvil) -->
-                <a href="index.html" class="flex items-center gap-2">
-                    <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
-                        <img src="./IMAGES/logo.png" alt="EJL" class="w-full h-full object-contain">
-                    </div>
-                    <span class="text-base sm:text-lg md:text-xl font-bold text-gray-800">EJL<span class="text-indigo-600">.</span></span>
-                </a>
-
-                <!-- Enlaces desktop -->
-                <div class="hidden md:flex items-center gap-6 lg:gap-8">
-                    <a href="index.html" class="text-sm text-gray-600 hover:text-gray-900 transition">Inicio</a>
-                    <a href="nosotros.html" class="text-sm text-gray-600 hover:text-gray-900 transition">Nosotros</a>
-                    <a href="ubicacion.html" class="text-sm text-gray-600 hover:text-gray-900 transition">Ubicación</a>
-                    <a href="eventos.html" class="text-sm text-gray-600 hover:text-gray-900 transition">Eventos</a>
-                    <a href="galeria.html" class="text-sm text-gray-600 hover:text-gray-900 transition">Galería</a>
-                    <a href="involucrate.html" class="text-sm text-gray-600 hover:text-gray-900 transition">Involúcrate</a>
-                    <a href="merch.html" class="text-sm text-indigo-600 font-semibold hover:text-indigo-700 transition">Merch</a>
-                </div>
-
-                <!-- Botón hamburguesa móvil + carrito -->
-                <div class="flex items-center gap-2 sm:gap-3 md:hidden">
-                    <!-- Botón carrito (móvil) -->
-                    <button onclick="toggleCart()" class="relative p-1.5 text-gray-600 hover:text-gray-900 transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25l-1.5-6.75m12.75 6.75a3 3 0 103 3m-3-3h3m-3 3a3 3 0 103 3" />
-                        </svg>
-                        <span id="cartCountMobile" class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-indigo-500 text-white text-[9px] font-medium flex items-center justify-center">0</span>
-                    </button>
-                    <button class="menu-hamburger" onclick="abrirMenuMovil()">
-                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Botón carrito (desktop) -->
-                <button onclick="toggleCart()" class="hidden md:flex relative items-center gap-2 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition text-sm text-gray-700">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25l-1.5-6.75m12.75 6.75a3 3 0 103 3m-3-3h3m-3 3a3 3 0 103 3" />
-                    </svg>
-                    <span>Carrito</span>
-                    <span id="cartCountDesktop" class="bg-indigo-600 text-white text-[10px] font-medium px-2 py-0.5 rounded-full">0</span>
-                </button>
-            </div>
-        </div>
-    </nav>
-
     <!-- ========== MERCH · TIENDA EJL ========== -->
-    <section class="py-4 sm:py-6 md:py-12 lg:py-20" id="tiendaMerch">
+    <section class="py-8 sm:py-12 md:py-20" id="tiendaMerch">
         <div class="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
             
             <!-- Breadcrumb -->
-            <div class="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-gray-400 mb-3 sm:mb-4 md:mb-6 lg:mb-8">
+            <div class="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-gray-400 mb-4 sm:mb-6 md:mb-8">
                 <a href="index.html" class="hover:text-gray-800 transition">Inicio</a>
                 <svg class="w-3 h-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -372,95 +226,85 @@
                 <span class="text-gray-800 font-medium">Merch</span>
             </div>
 
-            <div class="flex flex-col lg:flex-row gap-4 sm:gap-6 md:gap-8 lg:gap-14">
+            <div class="flex flex-col lg:flex-row gap-6 sm:gap-8 md:gap-10 lg:gap-14">
                 
-                <!-- ===== SIDEBAR (en móvil: collapse con botón) ===== -->
+                <!-- ===== SIDEBAR ===== -->
                 <div class="w-full lg:w-64 flex-shrink-0">
-                    <!-- Título y botón de filtros (móvil) -->
-                    <div class="flex items-center justify-between lg:block">
-                        <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-900 tracking-tight">Merch</h1>
-                        <button id="toggleFiltersBtn" class="lg:hidden text-sm text-indigo-600 font-medium flex items-center gap-1">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                            </svg>
-                            Filtros
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-light text-gray-900 mb-4 sm:mb-6 tracking-tight">Merch</h1>
+                    
+                    <!-- Buscador -->
+                    <div class="relative mb-4 sm:mb-6">
+                        <input type="text" id="searchInput" placeholder="Buscar producto..." 
+                               class="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl input-search text-gray-800 placeholder-gray-400 focus:outline-none transition text-xs sm:text-sm">
+                        <svg class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-3.5 sm:w-4 h-3.5 sm:h-4 text-gray-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+
+                    <!-- Categorías -->
+                    <div class="mb-4 sm:mb-6">
+                        <h4 class="text-[10px] sm:text-[11px] font-medium text-gray-400 uppercase tracking-widest mb-2 sm:mb-3 md:mb-4">Categorías</h4>
+                        <ul class="space-y-2 text-sm" id="categoriaList">
+                            <li><a href="#" class="filter-link active text-gray-900" data-categoria="todos">Todos</a></li>
+                            <li><a href="#" class="filter-link text-gray-500" data-categoria="playeras">Playeras</a></li>
+                            <li><a href="#" class="filter-link text-gray-500" data-categoria="sudaderas">Sudaderas</a></li>
+                            <li><a href="#" class="filter-link text-gray-500" data-categoria="gorras">Gorras</a></li>
+                            <li><a href="#" class="filter-link text-gray-500" data-categoria="accesorios">Accesorios</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Filtro de precio -->
+                    <div class="mb-4 sm:mb-6">
+                        <h4 class="text-[10px] sm:text-[11px] font-medium text-gray-400 uppercase tracking-widest mb-2 sm:mb-3">Precio</h4>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="priceMin" placeholder="$ Min" 
+                                   class="w-full px-2 sm:px-3 py-2 sm:py-2.5 rounded-xl input-search text-gray-800 placeholder-gray-400 focus:outline-none transition text-xs sm:text-sm">
+                            <span class="text-gray-300 text-xs sm:text-sm">—</span>
+                            <input type="number" id="priceMax" placeholder="$ Max" 
+                                   class="w-full px-2 sm:px-3 py-2 sm:py-2.5 rounded-xl input-search text-gray-800 placeholder-gray-400 focus:outline-none transition text-xs sm:text-sm">
+                        </div>
+                        <button id="applyPriceFilter" class="mt-2 sm:mt-3 w-full py-2 sm:py-2.5 rounded-xl btn-primary text-xs sm:text-sm font-medium transition">
+                            Aplicar filtro
                         </button>
                     </div>
 
-                    <!-- Contenido del sidebar (colapsable en móvil) -->
-                    <div id="filtersContent" class="hidden lg:block mt-3 sm:mt-4 lg:mt-6">
-                        <!-- Buscador -->
-                        <div class="relative mb-3 sm:mb-4 lg:mb-6">
-                            <input type="text" id="searchInput" placeholder="Buscar producto..." 
-                                   class="w-full px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 rounded-xl input-search text-gray-800 placeholder-gray-400 focus:outline-none transition text-xs sm:text-sm">
-                            <svg class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-3.5 sm:w-4 h-3.5 sm:h-4 text-gray-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                        </div>
-
-                        <!-- Categorías -->
-                        <div class="mb-3 sm:mb-4 lg:mb-6">
-                            <h4 class="text-[10px] sm:text-[11px] font-medium text-gray-400 uppercase tracking-widest mb-2 sm:mb-3">Categorías</h4>
-                            <ul class="space-y-1.5 sm:space-y-2 text-sm" id="categoriaList">
-                                <li><a href="#" class="filter-link active text-gray-900" data-categoria="todos">Todos</a></li>
-                                <li><a href="#" class="filter-link text-gray-500" data-categoria="playeras">Playeras</a></li>
-                                <li><a href="#" class="filter-link text-gray-500" data-categoria="sudaderas">Sudaderas</a></li>
-                                <li><a href="#" class="filter-link text-gray-500" data-categoria="gorras">Gorras</a></li>
-                                <li><a href="#" class="filter-link text-gray-500" data-categoria="accesorios">Accesorios</a></li>
-                            </ul>
-                        </div>
-
-                        <!-- Filtro de precio -->
-                        <div class="mb-3 sm:mb-4 lg:mb-6">
-                            <h4 class="text-[10px] sm:text-[11px] font-medium text-gray-400 uppercase tracking-widest mb-2 sm:mb-3">Precio</h4>
-                            <div class="flex items-center gap-2">
-                                <input type="number" id="priceMin" placeholder="$ Min" 
-                                       class="w-full px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl input-search text-gray-800 placeholder-gray-400 focus:outline-none transition text-xs sm:text-sm">
-                                <span class="text-gray-300 text-xs sm:text-sm">—</span>
-                                <input type="number" id="priceMax" placeholder="$ Max" 
-                                       class="w-full px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl input-search text-gray-800 placeholder-gray-400 focus:outline-none transition text-xs sm:text-sm">
+                    <!-- ===== LOGIN / REGISTRO CON PERFIL ===== -->
+                    <div id="authButtons" class="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-100">
+                        <!-- Usuario logueado -->
+                        <div id="userLoggedIn" class="hidden">
+                            <div class="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                                <img id="userProfilePic" src="" alt="Perfil" class="profile-pic">
+                                <div>
+                                    <p id="userDisplayName" class="text-gray-900 font-medium text-xs sm:text-sm">Usuario</p>
+                                    <p id="userDisplayEmail" class="text-gray-400 text-[10px] sm:text-xs">correo@ejemplo.com</p>
+                                </div>
                             </div>
-                            <button id="applyPriceFilter" class="mt-1.5 sm:mt-2 w-full py-1.5 sm:py-2 rounded-xl btn-primary text-xs sm:text-sm font-medium transition">
-                                Aplicar filtro
+                            <div id="saludoContainer" class="saludo-glass rounded-xl p-2 sm:p-3 mb-2 sm:mb-3 text-center hidden">
+                                <p class="text-gray-700 text-[10px] sm:text-xs font-light italic">
+                                    "Esperamos que disfrutes tu estancia en EJL Merch, <span id="saludoNombre" class="font-medium text-gray-900">amigo</span>"
+                                </p>
+                            </div>
+                            <button onclick="cerrarSesion()" 
+                                    class="w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-red-500/10 text-red-500 text-[10px] sm:text-xs font-medium hover:bg-red-500/20 transition">
+                                Cerrar sesión
+                            </button>
+                            <button onclick="abrirPerfil()" 
+                                    class="w-full mt-1.5 sm:mt-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-indigo-500/10 text-indigo-600 text-[10px] sm:text-xs font-medium hover:bg-indigo-500/20 transition">
+                                Editar perfil
                             </button>
                         </div>
 
-                        <!-- ===== LOGIN / REGISTRO (en sidebar) ===== -->
-                        <div id="authButtons" class="pt-3 sm:pt-4 border-t border-gray-100">
-                            <div id="userLoggedIn" class="hidden">
-                                <div class="flex items-center gap-2 sm:gap-3 mb-2">
-                                    <img id="userProfilePic" src="" alt="Perfil" class="profile-pic">
-                                    <div>
-                                        <p id="userDisplayName" class="text-gray-900 font-medium text-xs sm:text-sm">Usuario</p>
-                                        <p id="userDisplayEmail" class="text-gray-400 text-[9px] sm:text-xs truncate max-w-[120px]">correo@ejemplo.com</p>
-                                    </div>
-                                </div>
-                                <div id="saludoContainer" class="saludo-glass rounded-xl p-2 sm:p-3 mb-2 text-center hidden">
-                                    <p class="text-gray-700 text-[9px] sm:text-xs font-light italic">
-                                        "Esperamos que disfrutes tu estancia en EJL Merch, <span id="saludoNombre" class="font-medium text-gray-900">amigo</span>"
-                                    </p>
-                                </div>
-                                <button onclick="cerrarSesion()" 
-                                        class="w-full px-3 py-1.5 sm:py-2 rounded-xl bg-red-500/10 text-red-500 text-[10px] sm:text-xs font-medium hover:bg-red-500/20 transition">
-                                    Cerrar sesión
+                        <!-- Usuario no logueado -->
+                        <div id="userLoggedOut">
+                            <div class="flex gap-2">
+                                <button id="loginBtn" onclick="abrirLogin()" 
+                                        class="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#111827] text-white text-[10px] sm:text-xs font-medium hover:bg-[#1f2937] transition">
+                                    Iniciar sesión
                                 </button>
-                                <button onclick="abrirPerfil()" 
-                                        class="w-full mt-1.5 px-3 py-1.5 sm:py-2 rounded-xl bg-indigo-500/10 text-indigo-600 text-[10px] sm:text-xs font-medium hover:bg-indigo-500/20 transition">
-                                    Editar perfil
+                                <button id="registerBtn" onclick="abrirRegistro()" 
+                                        class="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl btn-outline text-gray-700 text-[10px] sm:text-xs font-medium transition">
+                                    Registrarse
                                 </button>
-                            </div>
-
-                            <div id="userLoggedOut">
-                                <div class="flex gap-2">
-                                    <button id="loginBtn" onclick="abrirLogin()" 
-                                            class="flex-1 px-3 py-1.5 sm:py-2 rounded-xl bg-[#111827] text-white text-[10px] sm:text-xs font-medium hover:bg-[#1f2937] transition">
-                                        Iniciar sesión
-                                    </button>
-                                    <button id="registerBtn" onclick="abrirRegistro()" 
-                                            class="flex-1 px-3 py-1.5 sm:py-2 rounded-xl btn-outline text-gray-700 text-[10px] sm:text-xs font-medium transition">
-                                        Registrarse
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -469,13 +313,13 @@
                 <!-- ===== PRODUCTOS ===== -->
                 <div class="flex-1">
                     <!-- Resultados y ordenamiento -->
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4 md:mb-6 lg:mb-8">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
                         <p class="text-gray-500 text-xs sm:text-sm" id="resultCount">
                             <span class="text-gray-900 font-medium" id="countDisplay">20</span> productos
                         </p>
                         <div class="flex items-center gap-2 sm:gap-3">
                             <span class="text-gray-400 text-[10px] sm:text-xs uppercase tracking-wider">Ordenar</span>
-                            <select id="sortSelect" class="px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl select-sort text-gray-800 text-xs sm:text-sm focus:outline-none transition">
+                            <select id="sortSelect" class="px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-xl select-sort text-gray-800 text-xs sm:text-sm focus:outline-none transition">
                                 <option value="recientes">Los últimos</option>
                                 <option value="price-asc">Precio: menor a mayor</option>
                                 <option value="price-desc">Precio: mayor a menor</option>
@@ -485,14 +329,14 @@
                     </div>
 
                     <!-- Grid de productos -->
-                    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6" id="productGrid">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5 lg:gap-6" id="productGrid">
                         <!-- Los productos se generan con JavaScript -->
                     </div>
 
                     <!-- Paginación -->
-                    <div class="flex flex-col sm:flex-row items-center justify-between mt-4 sm:mt-6 md:mt-8 lg:mt-10 pt-3 sm:pt-4 md:pt-6 lg:pt-8 border-t border-gray-200/60">
-                        <p class="text-gray-400 text-[9px] sm:text-xs md:text-sm" id="totalItems">20 artículos</p>
-                        <div class="flex items-center gap-1 sm:gap-1.5 mt-2 sm:mt-0" id="pagination">
+                    <div class="flex flex-col sm:flex-row items-center justify-between mt-6 sm:mt-8 md:mt-10 pt-4 sm:pt-6 md:pt-8 border-t border-gray-200/60">
+                        <p class="text-gray-400 text-[10px] sm:text-xs md:text-sm" id="totalItems">20 artículos</p>
+                        <div class="flex items-center gap-1 sm:gap-1.5 mt-2 sm:mt-3 sm:mt-0" id="pagination">
                             <!-- Se genera con JavaScript -->
                         </div>
                     </div>
@@ -505,7 +349,7 @@
     <div id="cartSidebar" class="fixed top-0 right-0 w-full sm:w-96 h-full bg-white shadow-2xl z-[100] transform translate-x-full transition-transform duration-500 ease-in-out">
         <div class="flex flex-col h-full">
             <div class="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100">
-                <h2 class="text-base sm:text-xl font-light text-gray-900">Tu pedido</h2>
+                <h2 class="text-lg sm:text-xl font-light text-gray-900">Tu pedido</h2>
                 <button onclick="toggleCart()" class="text-gray-400 hover:text-gray-600 transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -531,11 +375,19 @@
     <!-- ========== OVERLAY DEL CARRITO ========== -->
     <div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
 
+    <!-- ========== BOTÓN DEL CARRITO ========== -->
+    <button onclick="toggleCart()" id="cartButton" class="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#111827] text-white shadow-2xl shadow-black/20 hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center justify-center">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25l-1.5-6.75m12.75 6.75a3 3 0 103 3m-3-3h3m-3 3a3 3 0 103 3" />
+        </svg>
+        <span id="cartCount" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-indigo-500 text-white text-[10px] font-medium flex items-center justify-center">0</span>
+    </button>
+
     <!-- ========== MODAL LOGIN ========== -->
     <div id="loginModal" class="fixed inset-0 z-[200] bg-black/50 backdrop-blur-sm flex items-center justify-center hidden">
-        <div class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 w-full max-w-md mx-4 shadow-2xl">
-            <div class="flex justify-between items-center mb-3 sm:mb-4 md:mb-6">
-                <h2 class="text-lg sm:text-xl md:text-2xl font-light text-gray-900" id="modalTitle">Iniciar sesión</h2>
+        <div class="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 w-full max-w-md mx-4 shadow-2xl">
+            <div class="flex justify-between items-center mb-4 sm:mb-6">
+                <h2 class="text-xl sm:text-2xl font-light text-gray-900" id="modalTitle">Iniciar sesión</h2>
                 <button onclick="cerrarModal()" class="text-gray-400 hover:text-gray-600 transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -560,9 +412,9 @@
 
     <!-- ========== MODAL PERFIL (Glass) ========== -->
     <div id="perfilModal" class="fixed inset-0 z-[300] bg-black/40 backdrop-blur-sm flex items-center justify-center hidden">
-        <div class="glass-modal rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 w-full max-w-md mx-4 shadow-2xl">
-            <div class="flex justify-between items-center mb-3 sm:mb-4 md:mb-6">
-                <h2 class="text-lg sm:text-xl md:text-2xl font-light glass-text">Tu perfil</h2>
+        <div class="glass-modal rounded-2xl sm:rounded-3xl p-6 sm:p-8 w-full max-w-md mx-4 shadow-2xl">
+            <div class="flex justify-between items-center mb-4 sm:mb-6">
+                <h2 class="text-xl sm:text-2xl font-light glass-text">Tu perfil</h2>
                 <button onclick="cerrarPerfil()" class="text-gray-400 hover:text-gray-600 transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -570,12 +422,13 @@
                 </button>
             </div>
             <form id="perfilForm" onsubmit="return false;">
+                <!-- Foto de perfil -->
                 <div class="flex flex-col items-center mb-4 sm:mb-6">
                     <div class="relative">
                         <img id="perfilPreview" src="https://ui-avatars.com/api/?name=Usuario&background=4f46e5&color=fff&size=80" alt="Perfil" class="profile-pic-large">
                         <div class="file-input-wrapper absolute bottom-0 right-0">
-                            <button type="button" class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center text-[9px] sm:text-[10px] md:text-xs hover:bg-indigo-600 transition shadow-lg">
-                                <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <button type="button" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center text-[10px] sm:text-xs hover:bg-indigo-600 transition shadow-lg">
+                                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
@@ -586,6 +439,7 @@
                     <p class="text-gray-400 text-[8px] sm:text-[10px] mt-1.5 sm:mt-2">Toca el lápiz para cambiar tu foto</p>
                 </div>
 
+                <!-- Campos del perfil -->
                 <div class="space-y-2 sm:space-y-3">
                     <input type="text" id="perfilNombre" placeholder="¿Cómo quieres que te llamen?" 
                            class="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl glass-input placeholder-gray-400 focus:outline-none transition text-sm sm:text-base">
@@ -672,6 +526,7 @@
                     const user = userCredential.user;
                     console.log('✅ Sesión iniciada:', user.email);
                     alert('✅ ¡Bienvenido de vuelta!');
+                    // Limpiar carrito al iniciar sesión (carga desde localStorage)
                     cargarCarritoDesdeLocal();
                     location.reload();
                 })
@@ -685,10 +540,9 @@
             signOut(auth)
                 .then(() => {
                     console.log('✅ Sesión cerrada');
+                    // Limpiar carrito al cerrar sesión
                     localStorage.removeItem('cart');
                     document.getElementById('cartCount').textContent = '0';
-                    document.getElementById('cartCountMobile').textContent = '0';
-                    document.getElementById('cartCountDesktop').textContent = '0';
                     document.getElementById('cartItems').innerHTML = `<p class="text-gray-400 text-sm text-center py-8">Tu carrito está vacío</p>`;
                     document.getElementById('cartTotal').textContent = '$0';
                     alert('✅ Sesión cerrada correctamente');
@@ -703,10 +557,9 @@
         function cargarCarritoDesdeLocal() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             if (cart.length > 0) {
+                // Actualizar UI del carrito
                 const count = cart.reduce((sum, item) => sum + (item.cantidad || 1), 0);
                 document.getElementById('cartCount').textContent = count;
-                document.getElementById('cartCountMobile').textContent = count;
-                document.getElementById('cartCountDesktop').textContent = count;
                 
                 const itemsContainer = document.getElementById('cartItems');
                 const totalEl = document.getElementById('cartTotal');
@@ -755,6 +608,7 @@
                     document.getElementById('userDisplayName').textContent = nombre;
                     document.getElementById('userDisplayEmail').textContent = user.email;
                     
+                    // Mostrar saludo solo si tiene nombre completo
                     if (currentUserData.nombre && currentUserData.nombre.trim() !== '') {
                         document.getElementById('saludoContainer').classList.remove('hidden');
                         document.getElementById('saludoNombre').textContent = currentUserData.nombre;
@@ -768,8 +622,10 @@
                         document.getElementById('userProfilePic').src = `https://ui-avatars.com/api/?name=${nombre}&background=4f46e5&color=fff&size=40`;
                     }
                     
+                    // Cargar carrito desde localStorage
                     cargarCarritoDesdeLocal();
                     
+                    // Si no tiene nombre, pedir que complete
                     if (!currentUserData.nombre || currentUserData.nombre.trim() === '') {
                         setTimeout(() => {
                             cargarPerfilParaEditar(user);
@@ -878,6 +734,7 @@
                 console.log('👤 Usuario no autenticado');
                 document.getElementById('userLoggedIn').classList.add('hidden');
                 document.getElementById('userLoggedOut').classList.remove('hidden');
+                // Limpiar carrito al cerrar sesión
                 localStorage.removeItem('cart');
             }
         });
@@ -972,25 +829,6 @@
             e.preventDefault();
             window.guardarPerfil();
         });
-
-        // ===== MENÚ MÓVIL =====
-        window.abrirMenuMovil = function() {
-            document.getElementById('mobilePanel').classList.add('open');
-            document.getElementById('mobileOverlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        };
-        window.cerrarMenuMovil = function() {
-            document.getElementById('mobilePanel').classList.remove('open');
-            document.getElementById('mobileOverlay').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        };
-
-        // ===== FILTROS MÓVIL =====
-        document.getElementById('toggleFiltersBtn').addEventListener('click', function() {
-            const content = document.getElementById('filtersContent');
-            content.classList.toggle('hidden');
-            this.textContent = content.classList.contains('hidden') ? 'Filtros' : 'Cerrar filtros';
-        });
     </script>
 
     <!-- ========== TIENDA JAVASCRIPT ========== -->
@@ -1068,8 +906,6 @@
         function updateCartUI() {
             const count = cart.reduce((sum, item) => sum + (item.cantidad || 1), 0);
             document.getElementById('cartCount').textContent = count;
-            document.getElementById('cartCountMobile').textContent = count;
-            document.getElementById('cartCountDesktop').textContent = count;
             
             const itemsContainer = document.getElementById('cartItems');
             const totalEl = document.getElementById('cartTotal');
@@ -1167,11 +1003,11 @@
 
             if (pageItems.length === 0) {
                 grid.innerHTML = `
-                    <div class="col-span-2 text-center py-8 sm:py-12 md:py-16 lg:py-20">
+                    <div class="col-span-1 sm:col-span-2 text-center py-12 sm:py-16 md:py-20">
                         <svg class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-gray-300 mb-3 sm:mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
-                        <p class="text-gray-500 text-sm sm:text-base font-light">No se encontraron productos</p>
+                        <p class="text-gray-500 text-base sm:text-lg font-light">No se encontraron productos</p>
                         <p class="text-gray-400 text-xs sm:text-sm">Prueba ajustando los filtros de búsqueda</p>
                     </div>
                 `;
@@ -1183,19 +1019,19 @@
                 return `
                 <div class="product-card bg-white rounded-xl sm:rounded-2xl border border-gray-100/80 overflow-hidden shadow-sm relative">
                     ${p.etiqueta ? `
-                        <span class="absolute top-2 sm:top-3 right-2 sm:right-3 z-10 text-[9px] sm:text-[10px] font-medium px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full ${etiqStyle.bg} ${etiqStyle.text} border ${etiqStyle.border}">
+                        <span class="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4 z-10 text-[9px] sm:text-[10px] font-medium px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 rounded-full ${etiqStyle.bg} ${etiqStyle.text} border ${etiqStyle.border}">
                             ${p.etiqueta}
                         </span>
                     ` : ''}
-                    <div class="relative h-40 sm:h-48 md:h-56 bg-[#f8f9fa] overflow-hidden">
+                    <div class="relative h-48 sm:h-52 md:h-56 bg-[#f8f9fa] overflow-hidden">
                         <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="absolute w-40 sm:w-48 md:w-56 h-40 sm:h-48 md:h-56 bg-indigo-50/40 rounded-full blur-2xl -top-16 sm:-top-20 right-0"></div>
-                            <div class="absolute w-28 sm:w-32 md:w-40 h-28 sm:h-32 md:h-40 bg-purple-50/30 rounded-full blur-2xl -bottom-6 sm:-bottom-10 left-0"></div>
+                            <div class="absolute w-48 sm:w-56 md:w-64 h-48 sm:h-56 md:h-64 bg-indigo-50/40 rounded-full blur-2xl -top-20 -right-20 glow"></div>
+                            <div class="absolute w-32 sm:w-36 md:w-40 h-32 sm:h-36 md:h-40 bg-purple-50/30 rounded-full blur-2xl -bottom-10 -left-10 glow"></div>
                             <img src="./IMAGES/${p.imagen}" alt="${p.nombre}" 
-                                 class="h-24 sm:h-28 md:h-40 object-contain relative z-10 image-wrapper drop-shadow-lg">
+                                 class="h-28 sm:h-32 md:h-40 object-contain relative z-10 image-wrapper drop-shadow-lg">
                         </div>
                     </div>
-                    <div class="p-2.5 sm:p-3 md:p-4 lg:p-5">
+                    <div class="p-3 sm:p-4 md:p-5">
                         <div class="flex items-start justify-between">
                             <div>
                                 <p class="text-gray-400 text-[8px] sm:text-[10px] uppercase tracking-wider font-medium">${getCategoriaLabel(p.categoria)}</p>
@@ -1205,12 +1041,12 @@
                                 <span class="text-gray-900 font-semibold text-sm sm:text-base md:text-lg">$${p.precio}</span>
                             </div>
                         </div>
-                        <div class="mt-1.5 sm:mt-2 md:mt-3 lg:mt-4 flex items-center justify-between">
+                        <div class="mt-2 sm:mt-3 md:mt-4 flex items-center justify-between">
                             <div class="flex items-center gap-1.5">
                                 <span class="w-1.5 h-1.5 rounded-full ${p.stock ? 'bg-emerald-400' : 'bg-gray-300'}"></span>
-                                <span class="${p.stock ? 'text-emerald-600' : 'text-gray-400'} text-[9px] sm:text-[10px] md:text-xs font-medium">${p.stock ? 'Disponible' : 'Agotado'}</span>
+                                <span class="${p.stock ? 'text-emerald-600' : 'text-gray-400'} text-[10px] sm:text-xs font-medium">${p.stock ? 'Disponible' : 'Agotado'}</span>
                             </div>
-                            <button data-product-id="${p.id}" class="px-2 sm:px-3 md:px-4 py-0.5 sm:py-1 md:py-1.5 rounded-xl btn-outline text-gray-700 text-[9px] sm:text-[10px] md:text-xs font-medium transition ${!p.stock ? 'opacity-50 cursor-not-allowed' : ''}" ${!p.stock ? 'disabled' : ''}>
+                            <button data-product-id="${p.id}" class="px-2.5 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-xl btn-outline text-gray-700 text-[10px] sm:text-xs font-medium transition ${!p.stock ? 'opacity-50 cursor-not-allowed' : ''}" ${!p.stock ? 'disabled' : ''}>
                                 ${p.stock ? 'Añadir' : 'Agotado'}
                             </button>
                         </div>
@@ -1241,7 +1077,7 @@
             }
 
             let html = `
-                <button class="pagination-btn px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 rounded-lg text-[9px] sm:text-[10px] md:text-sm ${current <= 1 ? 'opacity-40 cursor-not-allowed' : ''}" 
+                <button class="pagination-btn px-2 sm:px-3 py-1 rounded-lg text-[10px] sm:text-sm ${current <= 1 ? 'opacity-40 cursor-not-allowed' : ''}" 
                         onclick="changePage(${current - 1})" ${current <= 1 ? 'disabled' : ''}>
                     Anterior
                 </button>
@@ -1249,16 +1085,16 @@
 
             for (let i = 1; i <= totalPages; i++) {
                 if (i === current) {
-                    html += `<button class="pagination-btn active px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 rounded-lg text-[9px] sm:text-[10px] md:text-sm">${i}</button>`;
+                    html += `<button class="pagination-btn active px-2 sm:px-3 py-1 rounded-lg text-[10px] sm:text-sm">${i}</button>`;
                 } else if (i === 1 || i === totalPages || Math.abs(i - current) <= 1) {
-                    html += `<button class="pagination-btn px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 rounded-lg text-[9px] sm:text-[10px] md:text-sm" onclick="changePage(${i})">${i}</button>`;
+                    html += `<button class="pagination-btn px-2 sm:px-3 py-1 rounded-lg text-[10px] sm:text-sm" onclick="changePage(${i})">${i}</button>`;
                 } else if (i === 2 || i === totalPages - 1) {
-                    html += `<span class="text-gray-300 px-1 text-[9px] sm:text-[10px] md:text-sm">…</span>`;
+                    html += `<span class="text-gray-300 px-1 text-[10px] sm:text-sm">…</span>`;
                 }
             }
 
             html += `
-                <button class="pagination-btn px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 rounded-lg text-[9px] sm:text-[10px] md:text-sm ${current >= totalPages ? 'opacity-40 cursor-not-allowed' : ''}" 
+                <button class="pagination-btn px-2 sm:px-3 py-1 rounded-lg text-[10px] sm:text-sm ${current >= totalPages ? 'opacity-40 cursor-not-allowed' : ''}" 
                         onclick="changePage(${current + 1})" ${current >= totalPages ? 'disabled' : ''}>
                     Siguiente
                 </button>
