@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>EJL | Ejército Juvenil Libano · Amigos por siempre</title>
+    
+    <!-- PRECONEXIÓN A FUENTES (SEGURO) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
     <!-- Tailwind CSS + Fuente Inter -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         * {
             font-family: 'Inter', sans-serif;
@@ -114,7 +120,7 @@
                 <!-- Logo / Nombre -->
                 <div class="flex items-center space-x-2">
                    <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-16 md:h-16">
-                        <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain" loading="lazy">
+                        <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain" loading="lazy" decoding="async">
                     </div>
                     <div>
                         <a href="index.html" class="text-sm sm:text-base md:text-xl lg:text-2xl font-bold tracking-tight logo-text text-white">
@@ -233,6 +239,7 @@
                     loop 
                     playsinline
                     preload="metadata"
+                    disableRemotePlayback
                     class="w-full h-auto max-h-[65vh] sm:max-h-[80vh] md:max-h-[100vh] object-contain scale-100 sm:scale-110 md:scale-125 drop-shadow-[0_0_80px_rgba(79,70,229,0.2)] sm:drop-shadow-[0_0_150px_rgba(79,70,229,0.4)] md:drop-shadow-[0_0_200px_rgba(79,70,229,0.5)]"
                     style="background: transparent;"
                 >
@@ -551,7 +558,7 @@
                     <div class="text-center sm:text-left">
                         <div class="flex items-center justify-center sm:justify-start space-x-2">
                             <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden flex-shrink-0">
-                                <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain" loading="lazy">
+                                <img src="./IMAGES/logo.png" alt="Logo EJL" class="w-full h-full object-contain" loading="lazy" decoding="async">
                             </div>
                             <span class="text-xl font-bold text-white">EJL<span class="text-indigo-400">.</span></span>
                         </div>
@@ -607,7 +614,7 @@
         </footer>
     </div>
 
-    <!-- SCRIPTS -->
+    <!-- SCRIPTS OPTIMIZADOS -->
     <script>
         const menuBtn = document.getElementById('menuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
