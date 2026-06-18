@@ -137,17 +137,7 @@
             }
         }
 
-        /* ===== ELIMINAR ZONA BLANCA/MORADA ENTRE HERO Y SIGUIENTE SECCIÓN ===== */
-        #heroSection + section {
-            margin-top: -2px !important;
-            padding-top: 2px !important;
-        }
-        section {
-            background-color: #111827 !important;
-        }
-        .seccion-flexible {
-            background-color: #111827 !important;
-        }
+        /* ===== ELIMINAR ZONAS BLANCAS DESPUÉS DEL HERO ===== */
         body {
             background-color: #111827 !important;
         }
@@ -157,6 +147,9 @@
             background-color: #111827 !important;
             background-size: cover !important;
             background-position: center !important;
+        }
+        .seccion-flexible {
+            background-color: #111827 !important;
         }
     </style>
 </head>
@@ -333,8 +326,8 @@
             </div>
         </section>
  
-        <!-- ========== SECCIÓN VIDEO DE BIENVENIDA (sin padding para eliminar zona) ========== -->
-        <section class="seccion-flexible relative py-0 bg-gray-900 overflow-hidden">
+        <!-- ========== SECCIÓN VIDEO DE BIENVENIDA ========== -->
+        <section class="seccion-flexible relative py-12 sm:py-16 md:py-20 lg:py-24 bg-gray-900 overflow-hidden">
             <div class="absolute inset-0 pointer-events-none">
                 <div class="absolute top-0 right-0 w-48 sm:w-64 md:w-80 h-48 sm:h-64 md:h-80 bg-indigo-600/10 rounded-full blur-3xl"></div>
                 <div class="absolute bottom-0 left-0 w-48 sm:w-64 md:w-80 h-48 sm:h-64 md:h-80 bg-purple-600/10 rounded-full blur-3xl"></div>
